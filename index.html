@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" href="./logo.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href=".logo.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="logo-180.png" />
 
     <style>
         * {
@@ -588,7 +588,6 @@
         }
         .control-btn:hover {
             border-color: var(--accent);
-            opacity: 1;
         }
 
 
@@ -5269,21 +5268,6 @@
 
         // Initialisiere Glossar beim Laden
         initGlossar();
-
-        // control-btn hover effect
-
-        document.querySelectorAll('.control-btn').forEach(btn => {
-          btn.addEventListener('mouseenter', function() {
-            document.querySelectorAll('.control-btn').forEach(b => {
-              b.style.opacity = (b === btn) ? '1' : '0.5';
-          });
-        });
-          btn.addEventListener('mouseleave', function() {
-            document.querySelectorAll('.control-btn').forEach(b => {
-              b.style.opacity = '1';
-            });
-          });
-        });
     </script>
 </body>
 </html>
