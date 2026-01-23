@@ -898,6 +898,150 @@
             cursor: pointer;
         }
 
+        .footer-link:hover {
+            color: var(--accent);
+        }
+
+        /* Glossar Section - Inline Card */
+        .glossar-section {
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .glossar-dropdown-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 16px;
+            margin-left: auto;
+        }
+
+        .glossar-dropdown-group .dropdown-label {
+            margin-bottom: 0;
+        }
+
+        .glossar-dropdown-group .dropdown-select {
+            width: auto;
+            min-width: 180px;
+        }
+
+        .glossar-content-wrapper {
+            min-height: 220px;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+
+        .glossar-content-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .glossar-content-wrapper::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        .glossar-content-wrapper::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .glossar-content-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        .glossar-inline-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 32px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .glossar-term {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glossar-full {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .glossar-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .glossar-inline-nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glossar-nav-btn {
+            padding: 14px 28px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .glossar-nav-btn:hover {
+            background: var(--accent);
+        }
+
+        .glossar-counter {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            font-family: 'JetBrains Mono', monospace;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .glossar-inline-categories {
+                gap: 6px;
+            }
+
+            .glossar-cat-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+
+            .glossar-inline-card {
+                padding: 20px;
+                min-height: 150px;
+            }
+
+            .glossar-term {
+                font-size: 1.25rem;
+            }
+
+            .glossar-full {
+                font-size: 1rem;
+            }
+
+            .glossar-nav-btn {
+                padding: 12px 16px;
+                font-size: 0.8rem;
+            }
+        }
+
 
         @media (max-width: 1024px) {
             .card-focus-area {
@@ -1182,7 +1326,7 @@
                             Antwort zeigen
                           </button>
                           <button class="control-btn btn-skip hidden" id="skipButton" onclick="skipCard()">
-                            Ueberspringen
+                            Überspringen
                           </button>
                         </div>
 
@@ -1244,13 +1388,38 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Glossar Section - IT-Fachbegriffe -->
+            <div class="glossar-section">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">IT-Fachbegriffe Glossar</div>
+                    <div class="glossar-dropdown-group">
+                        <label for="glossarCategorySelect" class="dropdown-label">Kategorie</label>
+                        <select id="glossarCategorySelect" class="dropdown-select" onchange="setGlossarCategory(this.value)">
+                            <option value="alle">Alle Kategorien</option>
+                        </select>
+                    </div>
+                    <div class="glossar-content-wrapper">
+                        <div class="glossar-inline-card" id="glossarCard">
+                            <div class="glossar-term" id="glossarTerm">Begriff</div>
+                            <div class="glossar-full" id="glossarFull">Vollstaendiger Name</div>
+                            <div class="glossar-desc" id="glossarDesc">Beschreibung</div>
+                        </div>
+                    </div>
+                    <div class="glossar-inline-nav">
+                        <button class="glossar-nav-btn" onclick="prevGlossarTerm()">← zurück</button>
+                        <span class="glossar-counter" id="glossarCounter">1 / 100</span>
+                        <button class="glossar-nav-btn" onclick="nextGlossarTerm()">Weiter →</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
             <div class="footer-text">AP1 Lernkarten v1.0</div>
             <div class="footer-links">
-                <span class="footer-link" onclick="resetProgress()">Fortschritt zuruecksetzen</span>
+                <span class="footer-link" onclick="resetProgress()">Fortschritt zurücksetzen</span>
             </div>
         </div>
     </div>
@@ -1592,36 +1761,48 @@
     "id": 25,
     "titel": "Nenne die Vorteile für ein User-Helpdesk-Ticketsystem.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Zentralisierung: Alle Anfragen werden gesammelt, kategorisiert und sind nachvollziehbar.",
+      "Transparenz: Nutzer und IT sehen den Bearbeitungsstatus jederzeit.",
+      "Wissensdatenbank: Gelöste Probleme dienen als Vorlagen für neue Fälle.",
+      "Messbarkeit: Reaktions- und Lösungszeiten lassen sich analysieren."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "Datenbanken"
+    "sprechernotizen": "Ein Helpdesk-Ticketsystem ersetzt den chaotischen 'wer-schreit-am-lautesten'-Support. Statt Anfragen per Zuruf oder E-Mail, die verloren gehen können, wird jeder Vorfall als nummeriertes Ticket erfasst. Dies schafft Struktur und ermöglicht es, Service Level Agreements (SLAs) – also garantierte Reaktionszeiten – zu überwachen und zu erfüllen. Für Unternehmen ist es zudem ein Nachweis der geleisteten Arbeit.",
+    "kategorie": "Projektmanagement"
   },
   {
     "id": 26,
-    "titel": "Wie können KI-Systeme in der Informations- und",
+    "titel": "Wie können KI-Systeme in der Informations- und Kommunikationstechnologie eingesetzt werden?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Automatisierung: Repetitive Aufgaben (Chatbots, Spamfilter) werden von KI übernommen.",
+      "Analyse: KI verarbeitet große Datenmengen zur Mustererkennung.",
+      "Sicherheit: Intrusion Detection Systems (IDS) nutzen KI zur Anomalieerkennung.",
+      "Predictive Maintenance: KI prognostiziert Ausfälle, um vorbeugende Wartung zu ermöglichen."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "IT-Sicherheit"
+    "sprechernotizen": "KI ist kein Ersatz für den Menschen, sondern ein extrem mächtiges Werkzeug. In der IuK nimmt sie uns vor allem Routine ab: Ein Chatbot kann 90% der Standardfragen beantworten, ein Spamfilter lernt ständig neue Phishing-Muster. Besonders wertvoll ist die Fähigkeit, in riesigen Logdateien Muster zu erkennen, die kein Mensch in überschaubarer Zeit finden würde.",
+    "kategorie": "Allgemein"
   },
   {
     "id": 27,
     "titel": "Was versteht man unter dem Begriff volkswirtschaftliche Sektoren?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Primärsektor: Urproduktion (z. B. Landwirtschaft, Bergbau).",
+      "Sekundärsektor: Industrie, Handwerk und Produktion.",
+      "Tertiärsektor: Dienstleistungen.",
+      "Quartärsektor: IT, Forschung und Entwicklung (modernes Modell)."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "IT-Sicherheit"
+    "sprechernotizen": "Die Einteilung der Wirtschaft in Sektoren hilft, gesellschaftliche Entwicklungen zu verstehen. Früher arbeitete der Großteil der Bevölkerung in der Landwirtschaft (Primär). Mit der Industrialisierung verlagerte sich die Arbeit in Fabriken (Sekundär). Heute dominieren in entwickelten Ländern Dienstleistungen (Tertiär) und zunehmend die Wissensarbeit (Quartär). Die IT-Branche gehört dabei klar zum Quartärsektor.",
+    "kategorie": "BWL-Grundlagen"
   },
   {
     "id": 28,
     "titel": "Was versteht man unter der Marktform des Monopols?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Alleinanbieter: Nur ein einziger Anbieter auf dem Markt.",
+      "Preismacht: Der Monopolist kann den Preis weitgehend selbst bestimmen.",
+      "Fehlender Wettbewerb: Der Konsument hat keine Ausweichmöglichkeit.",
+      "Beispiele: Früher Post und Telekom; heute teilweise Microsoft im Bereich Desktop-OS."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Hinweis: Diese Information stammt nicht direkt aus den hochgeladenen Quellen, ist aber essenzieller Bestandteil des IHK-Prüfungswissens. Ein Monopol ist die extremste Marktform. Da es keine Konkurrenz gibt, hat der Anbieter die volle Kontrolle über den Preis – begrenzt nur durch die Nachfrage und staatliche Regulierung. Früher waren staatliche Monopole (Post, Bahn) in Deutschland üblich. Im IT-Bereich hat Windows auf Desktop-PCs mit über 70% Marktanteil (Stand 2024) eine monopolartige Stellung.",
     "kategorie": "BWL-Grundlagen"
   },
   {
@@ -2466,180 +2647,240 @@
     "id": 101,
     "titel": "Wann kommt ein tagged VLAN (Virtual Local Area Network) zum Einsatz?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Switch-übergreifend: Um ein VLAN über mehrere Switches zu spannen.",
+      "Trunk Ports: Die Verbindung zwischen den Switches ist 'getagged'.",
+      "VLAN-Tags: Datenrahmen werden mit einer VLAN-ID markiert (IEEE 802.1q).",
+      "Auswertung: Der empfangende Switch liest den Tag und leitet korrekt weiter."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Wenn ein VLAN nur auf einem Switch existiert, reicht 'untagged'. Sobald aber z. B. Rechner aus der Buchhaltung an Switch A und Switch B verteilt sind und im selben VLAN 'Finanzen' sein sollen, braucht man tagged VLANs. Die Leitung zwischen den Switches ist dann ein 'Trunk', der Datenpakete mit einer VLAN-ID (einem 'Tag') versieht. So weiß Switch B, in welches VLAN er das Paket weiterleiten muss.",
     "kategorie": "Netzwerktechnik"
   },
   {
     "id": 102,
     "titel": "Beschreibe typische Merkmale des Client-Server-Modells.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Dienstbereitstellung: Der Server stellt Dienste/Ressourcen bereit.",
+      "Dienstanfrage: Der Client fragt diese Dienste bei Bedarf ab.",
+      "Protokollbasiert: Die Kommunikation folgt definierten Regeln (z. B. HTTP).",
+      "Rollenflexibilität: Ein Gerät kann gleichzeitig Client und Server sein."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Das Client-Server-Modell ist DAS Grundprinzip vernetzter IT. Der Server (lat. 'Diener') wartet passiv auf Anfragen, der Client (lat. 'Kunde') stellt aktiv Anfragen. Ein PC, der eine Webseite aufruft, ist Client. Der Webserver liefert die Seite. Das Modell erlaubt Zentralisierung (Daten an einem Ort, Wartung vereinfacht) und klare Verantwortlichkeiten.",
     "kategorie": "Netzwerktechnik"
   },
   {
     "id": 103,
-    "titel": "Welche Aufgaben hat ein Domain Name System (DNS) in einer Windows",
+    "titel": "Welche Aufgaben hat ein Domain Name System (DNS) in einer Windows Domäne?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Namensauflösung: Übersetzt lesbare Namen (z. B. server01.firma.local) in IP-Adressen.",
+      "Reverse Lookup: Übersetzt IP-Adressen zurück in Namen.",
+      "Zentrale Beantwortung: Alle Anfragen im Netzwerk gehen an den DNS-Server.",
+      "PTR Records: Pointer-Records für die Rückverfolgung."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "IT-Sicherheit"
+    "sprechernotizen": "In einem Windows Active Directory ist DNS nicht optional, es ist das absolute Herzstück. Ohne funktionierendes DNS kann sich kein Rechner an der Domäne anmelden, da er den Domänen-Controller nicht finden würde. Neben der einfachen Namensauflösung ist die Reverse-Auflösung (IP -> Name) wichtig für Logs und Sicherheitsüberprüfungen. Active Directory erweitert DNS um spezielle Einträge (SRV Records), die Dienste und ihre Standorte anzeigen.",
+    "kategorie": "Netzwerktechnik"
   },
   {
     "id": 104,
-    "titel": "Unterscheide die Mailingprotokolle IMAP/S, SMTP/S sowie POP3/S nach",
+    "titel": "Unterscheide die Mailingprotokolle IMAP/S, SMTP/S sowie POP3/S nach Verwendungszweck und Port.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "SMTPS (Port 465): Senden von E-Mails.",
+      "IMAPS (Port 993): Empfangen und Synchronisieren (Mails bleiben auf dem Server).",
+      "POP3S (Port 995): Empfangen und Herunterladen (Mails werden vom Server gelöscht).",
+      "Sicherheit: Das 'S' steht für die Verschlüsselung mittels TLS/SSL."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "IT-Sicherheit"
+    "sprechernotizen": "Für den Versand gibt es nur ein Protokoll: SMTP (Simple Mail Transfer Protocol). Für den Abruf hat man die Wahl: POP3 lädt die Mail auf EIN Gerät und löscht sie dann vom Server, was früher Speicher sparte. IMAP ist der moderne Standard, da es Mails auf dem Server belässt und alle Geräte synchron hält. Der Buchstabe 'S' am Ende markiert die verschlüsselte Variante.",
+    "kategorie": "Netzwerktechnik"
   },
   {
     "id": 105,
     "titel": "Erläutere den Unterschied zwischen einem Switch und einem Router.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Switch: Arbeitet auf OSI-Schicht 2 (Data Link Layer), kennt MAC-Adressen.",
+      "Router: Arbeitet auf OSI-Schicht 3 (Network Layer), kennt IP-Adressen.",
+      "Protokolle: Switch nutzt die MAC-Tabelle; Router nutzt Routing-Protokolle (z.B. OSPF, RIP).",
+      "Ports: Switch hat viele LAN-Ports; Router verbindet verschiedene Netze (z. B. LAN und WAN)."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Der Switch ist der 'Postverteiler' innerhalb eines Gebäudes (LAN). Er verbindet alle Geräte und lernt, welches Gerät (MAC-Adresse) an welchem Port hängt. Der Router ist der 'Fernfahrer'. Er verbindet verschiedene Netzwerke miteinander. Ohne Router könnte das Büro-LAN nicht mit dem Internet kommunizieren. Ein Router entscheidet, über welchen Weg ein Datenpaket ans Ziel kommt.",
     "kategorie": "Netzwerktechnik"
   },
   {
     "id": 106,
     "titel": "Was bedeutet der Begriff Standby- oder Offline-USV?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Klasse 3 (VFD): Voltage and Frequency Dependent - abhängig von Spannung und Frequenz.",
+      "Schutz: Nur bei totalem Stromausfall aktiv, kein Schutz vor Schwankungen.",
+      "Umschaltzeit: Typisch 4-10 Millisekunden.",
+      "Limitierung: Keine Spannungs- oder Frequenzstabilisierung im Normalbetrieb."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Die Offline-USV ist die einfachste und günstigste Art. Im Normalbetrieb fließt der Strom direkt aus der Steckdose zu den Geräten – die USV 'schläft' und lädt nur ihren Akku. Erst bei einem totalen Ausfall springt sie ein. Das Problem: Während der kurzen Umschaltzeit von 4-10 ms kann ein sehr empfindliches Gerät bereits abschalten. Sie eignet sich für PCs, nicht aber für Server.",
     "kategorie": "Hardware"
   },
   {
     "id": 107,
     "titel": "Was versteht man unter einer Online-USV?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Klasse 1 (VFI): Voltage and Frequency Independent - unabhängig von Spannung und Frequenz.",
+      "Dauerwandler: Der Strom fließt immer durch den Wechselrichter, der eine perfekte Sinusspannung erzeugt.",
+      "Keine Umschaltzeit: Die Batterie ist immer im Stromkreis.",
+      "Maximaler Schutz: Gegen alle Störungen (Ausfall, Schwankungen, Frequenzabweichung)."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "Datenbanken"
+    "sprechernotizen": "Die Online-USV ist der Goldstandard für kritische Systeme wie Server und Rechenzentren. Der Netzstrom wird permanent zu Gleichstrom gewandelt, lädt die Batterie, und ein Wechselrichter erzeugt daraus eine saubere Sinusspannung für die Endgeräte. Da die Batterie immer eingebunden ist, gibt es bei Stromausfall keine Unterbrechung – überhaupt keine.",
+    "kategorie": "Hardware"
   },
   {
     "id": 108,
     "titel": "Was versteht man unter der Bezeichnung Netzinteraktive USV?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Klasse 2 (VI): Voltage Independent - unabhängig von Spannung, aber abhängig von Frequenz.",
+      "Spannungsfilter: Ein AVR (Automatic Voltage Regulator) glättet leichte Schwankungen.",
+      "Umschaltzeit: Typisch 2-4 Millisekunden.",
+      "Schutz: Besser als Offline, aber nicht perfekt."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "Netzwerktechnik"
+    "sprechernotizen": "Die netzinteraktive USV ist der Kompromiss zwischen billig (Offline) und teuer (Online). Sie hat einen eingebauten Spannungsstabilisator (AVR), der bei leichten Unter- oder Überspannungen eingreift, ohne sofort die Batterie zu belasten. Daher schützt sie Geräte auch vor schlechter Netzqualität, nicht nur vor Ausfall.",
+    "kategorie": "Hardware"
   },
   {
     "id": 109,
     "titel": "Was bedeutet der Begriff SSID (Service Set Identifier)?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "SSID: Service Set Identifier - der WLAN-Netzwerkname.",
+      "Format: Bis zu 32 Byte lange Zeichenkette.",
+      "Broadcastdomäne: Die SSID identifiziert das Funknetz.",
+      "Multi-SSID: Ein physischer AP kann mehrere SSIDs (z.B. Gäste-WLAN) ausstrahlen."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Die SSID ist der 'Name' des WLAN-Netzes, den man beim Verbinden sieht. Jeder Access Point sendet seine SSID als 'Beacon' aus, damit Geräte das Netz finden. Eine SSID kann versteckt werden (kein Broadcast), aber das ist keine Sicherheitsmaßnahme – mit einfachen Tools ist sie trotzdem sichtbar.",
     "kategorie": "Netzwerktechnik"
   },
   {
     "id": 110,
     "titel": "Was versteht man unter den Begriffen CMS-, ERP- und CRM-System?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "CMS: Content Management System – Webseiteninhalte ohne Programmierkenntnisse pflegen.",
+      "ERP: Enterprise Resource Planning – Steuert alle Geschäftsprozesse zentral.",
+      "CRM: Customer Relationship Management – Verwaltet Kundenbeziehungen.",
+      "Ziel: Alle drei dienen der Digitalisierung und Effizienzsteigerung im Unternehmen."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "Netzwerktechnik"
+    "sprechernotizen": "CMS: Typische Beispiele sind WordPress, Typo3, Drupal. Sie erlauben es auch Laien, Texte und Bilder auf Webseiten zu ändern. ERP: SAP, Microsoft Dynamics. Das 'Nervenzentrum' eines Unternehmens – von der Lagerhaltung über die Produktion bis zur Buchhaltung. CRM: Salesforce, HubSpot. Der Fokus liegt auf dem Kunden: Wer hat wann was gekauft, wann war der letzte Kontakt?",
+    "kategorie": "Softwareentwicklung"
   },
   {
     "id": 111,
-    "titel": "Welche Maßnahmen sind geeignet, um die Verarbeitungsgeschwindigkeit",
+    "titel": "Welche Maßnahmen sind geeignet, um die Verarbeitungsgeschwindigkeit eines PCs zu steigern?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Speichermedien: HDD durch SSD ersetzen (größter Effekt für den Nutzer).",
+      "HDD-Upgrade: Falls HDD nötig, auf schnellere (7.200 U/min) wechseln.",
+      "System-Trennung: OS auf SSD, Daten auf HDD (Hybrid-Ansatz).",
+      "Netzwerk: NAS für gemeinsam genutzte Daten prüfen."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "Netzwerktechnik"
+    "sprechernotizen": "Für den Benutzer ist die SSD der größte Sprung bei gefühlter Geschwindigkeit, weil Programmstarts und Dateioperationen spürbar schneller werden. RAM-Ausbau hilft erst, wenn der RAM voll ist (sichtbar im Taskmanager). Eine schnellere CPU lohnt sich meist nur bei rechenintensiven Aufgaben wie Video-Rendering.",
+    "kategorie": "Hardware"
   },
   {
     "id": 112,
     "titel": "Ermittle Vor- und Nachteile einer M.2-SSD.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Vorteil: Extrem hohe Geschwindigkeit (bis zu 7.000 MB/s bei NVMe).",
+      "Vorteil: Kleiner Formfaktor, direkt auf dem Mainboard montiert.",
+      "Nachteil: Höherer Preis pro GB im Vergleich zu SATA-SSD.",
+      "Nachteil: Erzeugt mehr Wärme und benötigt oft Kühlung."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "BWL-Grundlagen"
+    "sprechernotizen": "M.2 ist ein Formfaktor (das physische Format). Die Geschwindigkeit hängt davon ab, ob die M.2-SSD das NVMe-Protokoll nutzt (schnell) oder SATA (langsamer). Eine M.2-NVMe-SSD ist ideal als Systemlaufwerk für das Betriebssystem, da der PC dadurch extrem schnell startet.",
+    "kategorie": "Hardware"
   },
   {
     "id": 113,
     "titel": "Nenne Vor- und Nachteile einer SATA-SSD.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Vorteil: Günstiger Preis pro GB.",
+      "Vorteil: Kompatibel mit älteren Systemen (2,5-Zoll-Formfaktor, SATA-Anschluss).",
+      "Nachteil: Maximale Geschwindigkeit auf ca. 550 MB/s durch SATA-III begrenzt.",
+      "Einsatz: Ideal als günstiges Upgrade für alte PCs oder für Datenlaufwerke."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "BWL-Grundlagen"
+    "sprechernotizen": "Die SATA-SSD ist das Arbeitspferd für preisbewusste Anwender. Sie ist zwar langsamer als M.2 NVMe, aber im Alltag fällt der Unterschied nur bei sehr großen Dateikopieraktionen auf. Da sie in jeden alten Laptop mit 2,5-Zoll-Schacht passt, ist sie perfekt, um einem betagten Rechner neues Leben einzuhauchen.",
+    "kategorie": "Hardware"
   },
   {
     "id": 114,
     "titel": "Erläutere den Begriff des CPU-Caches.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Pufferspeicher: Extrem schneller Speicher direkt im Prozessor.",
+      "Hierarchie: L1 (sehr schnell, klein), L2 (schnell, mittel), L3 (langsamer, größer).",
+      "Zweck: Speichert häufig genutzte Daten, um Wartezeiten beim RAM-Zugriff zu vermeiden.",
+      "Entlastung: Ohne Cache wäre die CPU ständig im Leerlauf."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Der Cache ist wie der Schreibtisch eines Büroarbeiters. Die Akten, die man gerade braucht, liegen griffbereit (Cache). Das Archiv im Keller (RAM) ist größer, aber der Weg dorthin dauert. L1 ist der kleinste, aber schnellste Cache, oft nur wenige Kilobyte. L3 kann mehrere Megabyte groß sein und wird von allen CPU-Kernen geteilt.",
     "kategorie": "Hardware"
   },
   {
     "id": 115,
-    "titel": "Erläutere, welche Aufgabe die Wärmeleitpaste zwischen der CPU und",
+    "titel": "Erläutere, welche Aufgabe die Wärmeleitpaste zwischen der CPU und dem Kühler erfüllt.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Wärmeableitung: Leitet die Wärme von der CPU zum Kühler.",
+      "Oberflächenausgleich: Füllt mikroskopisch kleine Unebenheiten aus.",
+      "Schutzfunktion: Verhindert Lufteinschlüsse, die die Kühlung verschlechtern.",
+      "Anwendung: Dünne, gleichmäßige Schicht auftragen."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "CPU und Kühler sehen glatt aus, sind es aber unter dem Mikroskop nicht. Wärmeleitpaste füllt die winzigen 'Löcher' zwischen den beiden Metallen. Da Luft ein schlechter Wärmeleiter ist, würde die CPU ohne Paste überhitzen. Auftragen: Eine erbsengroße Menge in die Mitte, der Kühler-Druck verteilt sie.",
     "kategorie": "Hardware"
   },
   {
     "id": 116,
-    "titel": "Berechne die Gesamtleistungsaufnahme für folgende IT-Landschaft für",
+    "titel": "Berechne die Gesamtleistungsaufnahme für folgende IT-Landschaft für ein Jahr (24/7-Betrieb) in Kilowatt.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Schritt 1: Summe der Watt-Leistung aller Geräte bilden.",
+      "Schritt 2: Umrechnung in kW pro Stunde (Leistungssumme / 1000).",
+      "Schritt 3: Multiplikation mit den Stunden eines Jahres (8.760 Std.).",
+      "Ergebnis: Gesamtverbrauch von 150.234 kW."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "Netzwerktechnik"
+    "sprechernotizen": "Um die Betriebskosten einer IT-Abteilung zu planen, muss man den Stromverbrauch berechnen. Die Rechnung im Detail: 1. 10 Server à 800W = 8.000W, 2. 25 PCs à 350W = 8.750W, 3. 2 Switche à 200W = 400W. Gesamtleistung: 17.150 Watt = 17,15 kW. Da die Geräte 24/7 laufen, multiplizieren wir die 17,15 kW mit 24 Stunden * 365 Tage (8.760h). Das ergibt eine Energie von 150.234 kWh (Kilowattstunden).",
+    "kategorie": "Hardware"
   },
   {
     "id": 117,
     "titel": "Wie berechnet man die Wirkleistung von elektrischen Geräten?",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Formel: P = U × I.",
+      "Einheiten: P (Wirkleistung in Watt), U (Spannung in Volt), I (Stromstärke in Ampere).",
+      "Standardwert: In Deutschland beträgt die Netzspannung 230 Volt.",
+      "Zeitbezug: Leistungsangaben beziehen sich in der Regel auf eine Dauer von 60 Minuten."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "Die Wirkleistung (P) gibt an, wie viel elektrische Energie ein Gerät tatsächlich in eine andere Energieform (z. B. Rechenleistung oder Wärme) umsetzt. In der IT-Prüfung ist dies die Standardformel, um herauszufinden, ob ein Netzteil oder eine Steckdose für die angeschlossene Hardware ausreicht.",
     "kategorie": "Hardware"
   },
   {
     "id": 118,
-    "titel": "Berechne die maximale Leistungsaufnahme an einer Mehrfachsteckdose,",
+    "titel": "Berechne die maximale Leistungsaufnahme an einer Mehrfachsteckdose, wenn maximal 16A zulässig sind.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Gegebene Werte: U = 230V, I = 16A.",
+      "Rechnung: P = U × I = 230V × 16A.",
+      "Ergebnis: 3.680 Watt (bzw. 3,68 kW).",
+      "Sicherheit: Dies ist die absolute Obergrenze für eine haushaltsübliche Sicherung."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
-    "kategorie": "IT-Sicherheit"
+    "sprechernotizen": "Haushaltsübliche Schuko-Steckdosen und Mehrfachleisten sind in Deutschland meist auf 16 Ampere abgesichert. Wenn man zu viele leistungsstarke Geräte (z. B. mehrere Laserdrucker oder Heizlüfter) an eine einzige Leiste anschließt und die Summe der Watt-Leistungen über 3.680 Watt steigt, löst die Sicherung aus, um einen Kabelbrand zu verhindern.",
+    "kategorie": "Hardware"
   },
   {
     "id": 119,
-    "titel": "Berechne die Zeitdifferenz der Überbrückung bei einer USV durch",
+    "titel": "Berechne die Zeitdifferenz der Überbrückung bei einer USV durch Zusatzbelastung.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Kapazität: 20 Batterien à 12V / 4,5 Ah = 1080 Wh (1,08 kWh).",
+      "Szenario 1 (1,2 kW): Überbrückungszeit ca. 54 Minuten.",
+      "Szenario 2 (1,6 kW): Überbrückungszeit ca. 40 Minuten.",
+      "Differenz: Die Zeit verkürzt sich um 14 Minuten."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "USVs haben eine begrenzte Energiemenge. Wenn man mehr Geräte anschließt, sinkt die Zeit, in der die Batterie den Stromausfall überbrücken kann. Der Rechenweg: 1. Gesamtenergie berechnen. 2. Zeit bei 1200W ermitteln. 3. Zeit bei 1600W (Zusatzbelastung) berechnen. Die Differenz beträgt somit 14 Minuten weniger Pufferzeit.",
     "kategorie": "Hardware"
   },
   {
     "id": 120,
     "titel": "Nenne 3 Maßnahmen zur Verbesserung der WLAN-Empfangsqualität.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "Repeater: Einsatz von Verstärkern zur Reichweitenerhöhung.",
+      "Antennen: Erhöhung der Sendeleistung durch größere/bessere Antennen.",
+      "Positionierung: Standort des Access Points optimieren (zentral, keine Hindernisse).",
+      "Konfiguration: Wahl eines anderen WLAN-Standards oder Kanals."
     ],
-    "sprechernotizen": "Keine Notizen verfuegbar",
+    "sprechernotizen": "WLAN-Signale werden durch Wände, Wasserleitungen und andere Funknetze gedämpft. Oft hilft es schon, den Router nicht in einem Schrank zu verstecken, sondern höher zu platzieren. Wenn das Signal baulich bedingt nicht ausreicht, sind Mesh-Systeme oder Repeater die Lösung. Auch der Wechsel von 2,4 GHz auf 5 GHz kann helfen, wenn viele Nachbarn denselben Frequenzbereich stören.",
     "kategorie": "Netzwerktechnik"
   },
   {
@@ -3328,9 +3569,15 @@
   },
   {
     "id": 180,
-    "titel": "Die Installation eines Windows Betriebssystems benötigt einige",
+    "titel": "Die Installation eines Windows Betriebssystems benötigt einige Schritte. Bringe diese in die richtige Reihenfolge.",
     "hauptpunkte": [
-      "Keine Hauptpunkte gefunden"
+      "P.O.S.T. (Power-On Self-Test): Selbsttest der Hardware.",
+      "Bootreihenfolge: Einstellung im BIOS/UEFI anpassen.",
+      "Installationsmedium: Installation vom USB-Stick/DVD starten.",
+      "EULA: Lizenzbedingungen akzeptieren.",
+      "Filesystem: Partitionierung und Formatierung der Festplatte.",
+      "Benutzer: Eingabe von Benutzername und Passwort.",
+      "Benutzerprofile: Personalisierung (Einstellungen) und Installation von Programmen."
     ],
     "sprechernotizen": "Dieser Prozess beschreibt den Weg von der „nackten“ Hardware bis zum einsatzbereiten Desktop. Zuerst prüft die Hardware sich selbst (POST). Dann muss dem BIOS/UEFI gesagt werden, dass es vom USB-Stick starten soll. Nach der Bestätigung der Lizenzbedingungen (EULA) wird die Festplatte vorbereitet und schließlich die Software-Umgebung für den Nutzer eingerichtet. • Konkretes Beispiel: Ein Azubi wundert sich, warum die Installation nicht startet. Er hat zwar den USB-Stick eingesteckt (Schritt 3), aber vergessen im BIOS die Bootreihenfolge (Schritt 2) zu ändern. Der PC startet deshalb immer wieder das alte, defekte Windows von der Festplatte statt das Setup vom Stick.",
     "kategorie": "Hardware"
@@ -4391,1317 +4638,8 @@
     ],
     "sprechernotizen": "Leasing ist ein Finanzierungsinstrument. Es erlaubt Unternehmen, ihre IT-Infrastruktur modern zu halten, ohne große Summen auf einmal investieren zu müssen. Man zahlt jedoch für diese Flexibilität einen Aufpreis in Form der Leasinggebühren. • Konkretes Beispiel: Ein Callcenter least 200 Headsets und PCs. Vorteil ist die Planbarkeit der monatlichen Kosten. Wenn ein Gerät defekt ist, liefert der Leasinggeber im Rahmen des Vertrags sofort Ersatz, ohne dass neue Anschaffungskosten entstehen.",
     "kategorie": "BWL-Grundlagen"
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen IPv4 und IPv6?",
-    "hauptpunkte": [
-      "IPv4: 32 Bit Adresslaenge, ca. 4,3 Milliarden Adressen",
-      "IPv6: 128 Bit Adresslaenge, nahezu unbegrenzte Adressen",
-      "IPv4-Notation: Dezimal mit Punkten (z.B. 192.168.1.1)",
-      "IPv6-Notation: Hexadezimal mit Doppelpunkten (z.B. 2001:0db8::1)"
-    ],
-    "sprechernotizen": "IPv4-Adressen sind weltweit knapp geworden. IPv6 wurde entwickelt, um dieses Problem zu loesen. IPv6 bietet zusaetzlich verbesserte Sicherheit (IPsec integriert) und effizienteres Routing.",
-    "kategorie": "Netzwerktechnik",
-    "id": 271
-  },
-  {
-    "titel": "Was ist Subnetting und wozu dient es?",
-    "hauptpunkte": [
-      "Unterteilung eines Netzwerks in kleinere logische Segmente",
-      "Subnetzmaske bestimmt Netz- und Hostanteil der IP-Adresse",
-      "CIDR-Notation: z.B. /24 entspricht 255.255.255.0",
-      "Vorteile: Bessere Verwaltung, erhoehte Sicherheit, weniger Broadcast-Traffic"
-    ],
-    "sprechernotizen": "Beim Subnetting wird ein grosses Netzwerk in kleinere Subnetze aufgeteilt. Bei /24 sind die ersten 24 Bit fuer das Netz reserviert, die letzten 8 Bit fuer Hosts (254 nutzbare Adressen).",
-    "kategorie": "Netzwerktechnik",
-    "id": 272
-  },
-  {
-    "titel": "Erklaere die Funktion von NAT (Network Address Translation).",
-    "hauptpunkte": [
-      "Uebersetzt private IP-Adressen in oeffentliche Adressen",
-      "Ermoeglicht mehreren Geraeten die Nutzung einer oeffentlichen IP",
-      "PAT (Port Address Translation): Unterscheidung ueber Portnummern",
-      "Erhoeht die Sicherheit durch Verstecken interner Netzwerkstruktur"
-    ],
-    "sprechernotizen": "NAT wird typischerweise am Router eingesetzt. Private IP-Bereiche (10.x.x.x, 172.16-31.x.x, 192.168.x.x) sind im Internet nicht routbar.",
-    "kategorie": "Netzwerktechnik",
-    "id": 273
-  },
-  {
-    "titel": "Was ist RAID und welche Level gibt es?",
-    "hauptpunkte": [
-      "RAID 0 (Striping): Hohe Geschwindigkeit, keine Redundanz",
-      "RAID 1 (Mirroring): Vollstaendige Spiegelung, 50% Kapazitaetsverlust",
-      "RAID 5: Verteilte Paritaet, min. 3 Festplatten, 1 darf ausfallen",
-      "RAID 6: Doppelte Paritaet, min. 4 Festplatten, 2 duerfen ausfallen"
-    ],
-    "sprechernotizen": "RAID (Redundant Array of Independent Disks) kombiniert mehrere Festplatten zu einem logischen Laufwerk. RAID ersetzt KEIN Backup!",
-    "kategorie": "Hardware",
-    "id": 274
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen symmetrischer und asymmetrischer Verschluesselung?",
-    "hauptpunkte": [
-      "Symmetrisch: Ein Schluessel fuer Ver- und Entschluesselung (z.B. AES)",
-      "Asymmetrisch: Schluesselpaar aus oeffentlichem und privatem Schluessel (z.B. RSA)",
-      "Symmetrisch: Schneller, Problem bei Schluesselaustausch",
-      "Asymmetrisch: Langsamer, loest Schluesselaustauschproblem"
-    ],
-    "sprechernotizen": "In der Praxis werden beide kombiniert (Hybridverfahren). So funktioniert z.B. TLS/HTTPS.",
-    "kategorie": "IT-Sicherheit",
-    "id": 275
-  },
-  {
-    "titel": "Was ist ein Hash-Wert und wofuer wird er verwendet?",
-    "hauptpunkte": [
-      "Einweg-Funktion: Aus Daten wird feste Zeichenfolge erzeugt",
-      "Kollisionsresistenz: Verschiedene Eingaben sollten verschiedene Hashes ergeben",
-      "Anwendungen: Passwort-Speicherung, Integritaetspruefung, digitale Signaturen",
-      "Gaengige Algorithmen: SHA-256, SHA-3 (MD5 und SHA-1 gelten als unsicher)"
-    ],
-    "sprechernotizen": "Ein Hash-Wert ist wie ein digitaler Fingerabdruck. Passwoerter werden nie im Klartext gespeichert, sondern als Hash.",
-    "kategorie": "IT-Sicherheit",
-    "id": 276
-  },
-  {
-    "titel": "Was ist ein digitales Zertifikat und wie funktioniert PKI?",
-    "hauptpunkte": [
-      "Zertifikat: Elektronischer Ausweis mit oeffentlichem Schluessel und Identitaet",
-      "CA (Certificate Authority): Vertrauenswuerdige Stelle, die Zertifikate ausstellt",
-      "PKI (Public Key Infrastructure): System zur Verwaltung digitaler Zertifikate",
-      "Chain of Trust: Hierarchie von Zertifikaten bis zur Root-CA"
-    ],
-    "sprechernotizen": "Wenn du eine HTTPS-Website besuchst, prueft dein Browser das Zertifikat. Let's Encrypt ist eine bekannte kostenlose CA.",
-    "kategorie": "IT-Sicherheit",
-    "id": 277
-  },
-  {
-    "titel": "Erklaere den Unterschied zwischen TCP und UDP.",
-    "hauptpunkte": [
-      "TCP: Verbindungsorientiert, garantierte Zustellung, Reihenfolge gesichert",
-      "UDP: Verbindungslos, keine Zustellgarantie, geringerer Overhead",
-      "TCP: 3-Wege-Handshake (SYN, SYN-ACK, ACK)",
-      "UDP: Ideal fuer Streaming, VoIP, DNS-Anfragen, Online-Gaming"
-    ],
-    "sprechernotizen": "TCP ist wie ein Einschreiben - du weisst, dass es angekommen ist. UDP ist wie eine Postkarte - schneller, aber keine Garantie.",
-    "kategorie": "Netzwerktechnik",
-    "id": 278
-  },
-  {
-    "titel": "Was ist DHCP und wie funktioniert der DORA-Prozess?",
-    "hauptpunkte": [
-      "DHCP vergibt automatisch IP-Adressen an Clients",
-      "D - Discover: Client sucht per Broadcast nach DHCP-Server",
-      "O - Offer: Server bietet eine IP-Adresse an",
-      "R - Request: Client fordert die angebotene Adresse an",
-      "A - Acknowledge: Server bestaetigt die Vergabe"
-    ],
-    "sprechernotizen": "DHCP erleichtert die Netzwerkverwaltung enorm. Die Lease-Zeit bestimmt, wie lange die IP gueltig ist.",
-    "kategorie": "Netzwerktechnik",
-    "id": 279
-  },
-  {
-    "titel": "Was ist DNS und wie funktioniert die Namensaufloesung?",
-    "hauptpunkte": [
-      "DNS uebersetzt Domainnamen in IP-Adressen",
-      "Hierarchische Struktur: Root-Server, TLD-Server, Autoritativer Server",
-      "Rekursive Abfrage: DNS-Resolver fragt schrittweise die Hierarchie ab",
-      "Caching: Ergebnisse werden zwischengespeichert (TTL)"
-    ],
-    "sprechernotizen": "Wenn du www.example.de eingibst, fragt dein Rechner den DNS-Resolver. Das Ergebnis wird gecacht, um zukuenftige Anfragen zu beschleunigen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 280
-  },
-  {
-    "titel": "Was ist ein VPN und welche Arten gibt es?",
-    "hauptpunkte": [
-      "VPN: Sichere, verschluesselte Verbindung ueber oeffentliche Netze",
-      "Site-to-Site: Verbindet zwei Netzwerke (z.B. Firmenzentralen)",
-      "End-to-Site (Remote Access): Einzelner Benutzer verbindet sich mit Firmennetz",
-      "Protokolle: IPsec, OpenVPN, WireGuard, SSL/TLS"
-    ],
-    "sprechernotizen": "VPN erstellt einen verschluesselten Tunnel durch das Internet. Fuer Homeoffice-Mitarbeiter ist End-to-Site-VPN Standard.",
-    "kategorie": "Netzwerktechnik",
-    "id": 281
-  },
-  {
-    "titel": "Was ist eine DMZ (Demilitarisierte Zone)?",
-    "hauptpunkte": [
-      "Netzwerksegment zwischen internem Netz und Internet",
-      "Enthaelt oeffentlich erreichbare Server (Webserver, Mailserver)",
-      "Zwei Firewalls: Eine zum Internet, eine zum internen Netz",
-      "Bei Kompromittierung bleibt internes Netz geschuetzt"
-    ],
-    "sprechernotizen": "Die DMZ ist ein Pufferbereich. Selbst wenn ein Angreifer einen DMZ-Server hackt, muss er noch die innere Firewall ueberwinden.",
-    "kategorie": "IT-Sicherheit",
-    "id": 282
-  },
-  {
-    "titel": "Was ist ein Container und wie unterscheidet er sich von einer VM?",
-    "hauptpunkte": [
-      "Container: Leichtgewichtige Isolation auf Betriebssystemebene",
-      "VM: Vollstaendige Virtualisierung mit eigenem Betriebssystem",
-      "Container starten in Sekunden, VMs brauchen Minuten",
-      "Container teilen sich den Kernel, VMs haben jeweils eigenen"
-    ],
-    "sprechernotizen": "Container (z.B. Docker) sind effizienter als VMs, da sie den Kernel des Host-Systems nutzen. VMs bieten staerkere Isolation.",
-    "kategorie": "Cloud/Virtualisierung",
-    "id": 283
-  },
-  {
-    "titel": "Was ist Active Directory (AD)?",
-    "hauptpunkte": [
-      "Zentraler Verzeichnisdienst von Microsoft",
-      "Verwaltung von Benutzern, Gruppen, Computern und Ressourcen",
-      "Gruppenrichtlinien (GPO): Zentrale Konfiguration und Sicherheitseinstellungen",
-      "Domaenenstruktur: Organisationseinheiten (OU), Domaenen, Forests"
-    ],
-    "sprechernotizen": "AD ist das Herzstueck der Windows-Netzwerkverwaltung in Unternehmen. Benutzer melden sich einmal an (Single Sign-On).",
-    "kategorie": "Netzwerktechnik",
-    "id": 284
-  },
-  {
-    "titel": "Was sind die wichtigsten HTTP-Statuscodes?",
-    "hauptpunkte": [
-      "2xx Erfolg: 200 OK, 201 Created, 204 No Content",
-      "3xx Umleitung: 301 Moved Permanently, 302 Found, 304 Not Modified",
-      "4xx Client-Fehler: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found",
-      "5xx Server-Fehler: 500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable"
-    ],
-    "sprechernotizen": "HTTP-Statuscodes zeigen das Ergebnis einer Anfrage. 200 bedeutet alles OK. 404 heisst die Ressource existiert nicht.",
-    "kategorie": "Netzwerktechnik",
-    "id": 285
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen SSH und Telnet?",
-    "hauptpunkte": [
-      "SSH: Verschluesselte Verbindung (Port 22), sicher",
-      "Telnet: Unverschluesselt (Port 23), unsicher",
-      "SSH unterstuetzt Authentifizierung per Schluessel",
-      "SSH kann auch fuer Dateiuebertragung (SCP, SFTP) genutzt werden"
-    ],
-    "sprechernotizen": "Telnet uebertraegt alles im Klartext. SSH ist Standard fuer die sichere Fernwartung von Linux-Servern.",
-    "kategorie": "Netzwerktechnik",
-    "id": 286
-  },
-  {
-    "titel": "Was ist ein Proxy-Server und welche Arten gibt es?",
-    "hauptpunkte": [
-      "Vermittler zwischen Client und Zielserver",
-      "Forward-Proxy: Clients nutzen ihn fuer ausgehende Anfragen",
-      "Reverse-Proxy: Steht vor Servern, verteilt Last, erhoeht Sicherheit",
-      "Funktionen: Caching, Filterung, Anonymisierung, Load Balancing"
-    ],
-    "sprechernotizen": "Ein Forward-Proxy in Unternehmen kann Webinhalte filtern und cachen. Ein Reverse-Proxy wie nginx verteilt Anfragen auf mehrere Backend-Server.",
-    "kategorie": "Netzwerktechnik",
-    "id": 287
-  },
-  {
-    "titel": "Was ist VLAN und wozu wird es eingesetzt?",
-    "hauptpunkte": [
-      "Logische Trennung eines physischen Netzwerks",
-      "Broadcast-Domaenen werden verkleinert",
-      "Erhoehte Sicherheit durch Isolation von Netzwerksegmenten",
-      "802.1Q-Tagging: VLAN-ID im Ethernet-Frame"
-    ],
-    "sprechernotizen": "Mit VLANs kann man z.B. Buchhaltung und Entwicklung im gleichen physischen Switch trennen. Kommunikation zwischen VLANs ist nur ueber einen Router moeglich.",
-    "kategorie": "Netzwerktechnik",
-    "id": 288
-  },
-  {
-    "titel": "Was sind die Schichten des TCP/IP-Modells?",
-    "hauptpunkte": [
-      "Schicht 4: Anwendungsschicht (HTTP, FTP, SMTP, DNS)",
-      "Schicht 3: Transportschicht (TCP, UDP)",
-      "Schicht 2: Internetschicht (IP, ICMP, ARP)",
-      "Schicht 1: Netzzugangsschicht (Ethernet, WLAN)"
-    ],
-    "sprechernotizen": "Das TCP/IP-Modell ist die praktische Variante des theoretischen OSI-Modells. Es fasst die 7 OSI-Schichten zu 4 zusammen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 289
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen Authentifizierung und Autorisierung?",
-    "hauptpunkte": [
-      "Authentifizierung: Wer bist du? (Identitaetspruefung)",
-      "Autorisierung: Was darfst du? (Berechtigungspruefung)",
-      "Authentifizierung erfolgt vor Autorisierung",
-      "Faktoren: Wissen (Passwort), Besitz (Token), Biometrie (Fingerabdruck)"
-    ],
-    "sprechernotizen": "Beispiel: Du meldest dich mit Benutzername und Passwort an (Authentifizierung). Danach prueft das System, ob du auf einen Ordner zugreifen darfst (Autorisierung).",
-    "kategorie": "IT-Sicherheit",
-    "id": 290
-  },
-  {
-    "titel": "Was ist SQL-Injection und wie schuetzt man sich davor?",
-    "hauptpunkte": [
-      "Angreifer schleust SQL-Code ueber Eingabefelder ein",
-      "Kann Daten auslesen, aendern oder loeschen",
-      "Schutz: Prepared Statements / Parametrisierte Abfragen",
-      "Zusaetzlich: Eingabevalidierung, Least-Privilege-Prinzip fuer DB-User"
-    ],
-    "sprechernotizen": "Klassisches Beispiel: Im Login-Feld wird ' OR '1'='1 eingegeben. Prepared Statements trennen SQL-Befehl von Daten.",
-    "kategorie": "IT-Sicherheit",
-    "id": 291
-  },
-  {
-    "titel": "Was ist XSS (Cross-Site Scripting)?",
-    "hauptpunkte": [
-      "Einschleusen von boesartigem JavaScript in Webseiten",
-      "Stored XSS: Script wird in Datenbank gespeichert",
-      "Reflected XSS: Script wird ueber URL-Parameter eingeschleust",
-      "Schutz: Output-Encoding, Content Security Policy (CSP)"
-    ],
-    "sprechernotizen": "Bei XSS fuehrt der Browser des Opfers das eingeschleuste Script aus. Alle Benutzereingaben muessen vor der Ausgabe escaped werden.",
-    "kategorie": "IT-Sicherheit",
-    "id": 292
-  },
-  {
-    "titel": "Was ist ein Datenbankindex und wann sollte man ihn verwenden?",
-    "hauptpunkte": [
-      "Datenstruktur zur Beschleunigung von Suchanfragen",
-      "Vergleichbar mit Stichwortverzeichnis in einem Buch",
-      "Vorteil: Schnellere SELECT-Abfragen",
-      "Nachteil: Zusaetzlicher Speicherplatz, langsamere INSERT/UPDATE"
-    ],
-    "sprechernotizen": "Ein Index sollte auf Spalten erstellt werden, nach denen haeufig gesucht wird. Primaerschluessel haben automatisch einen Index.",
-    "kategorie": "Datenbanken",
-    "id": 293
-  },
-  {
-    "titel": "Was ist ein JOIN in SQL und welche Typen gibt es?",
-    "hauptpunkte": [
-      "INNER JOIN: Nur uebereinstimmende Datensaetze beider Tabellen",
-      "LEFT JOIN: Alle aus linker Tabelle + Matches aus rechter",
-      "RIGHT JOIN: Alle aus rechter Tabelle + Matches aus linker",
-      "FULL OUTER JOIN: Alle Datensaetze aus beiden Tabellen"
-    ],
-    "sprechernotizen": "JOINs verknuepfen Tabellen ueber gemeinsame Spalten. INNER JOIN ist am haeufigsten - du bekommst nur Datensaetze, die in beiden Tabellen vorkommen.",
-    "kategorie": "Datenbanken",
-    "id": 294
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen TRUNCATE, DELETE und DROP?",
-    "hauptpunkte": [
-      "DELETE: Loescht Zeilen (mit WHERE filterbar), langsamer, Rollback moeglich",
-      "TRUNCATE: Loescht alle Zeilen, schneller, kein WHERE, kein Rollback",
-      "DROP: Loescht die gesamte Tabelle inkl. Struktur",
-      "DELETE ist DML, TRUNCATE und DROP sind DDL"
-    ],
-    "sprechernotizen": "DELETE protokolliert jede geloeschte Zeile einzeln. TRUNCATE setzt die Tabelle einfach zurueck. DROP entfernt die Tabelle komplett.",
-    "kategorie": "Datenbanken",
-    "id": 295
-  },
-  {
-    "titel": "Was ist ein Entity-Relationship-Diagramm (ERD)?",
-    "hauptpunkte": [
-      "Grafische Darstellung von Datenbankstrukturen",
-      "Entitaeten (Rechtecke): Objekte wie Kunde, Produkt",
-      "Attribute (Ovale): Eigenschaften wie Name, Preis",
-      "Beziehungen (Rauten): 1:1, 1:n, m:n Kardinalitaeten"
-    ],
-    "sprechernotizen": "Das ERD wird in der Analysephase erstellt, bevor die Datenbank implementiert wird. Es zeigt, welche Daten gespeichert werden und wie sie zusammenhaengen.",
-    "kategorie": "Datenbanken",
-    "id": 296
-  },
-  {
-    "titel": "Was ist Agile Softwareentwicklung?",
-    "hauptpunkte": [
-      "Iteratives und inkrementelles Vorgehen in kurzen Zyklen",
-      "Agiles Manifest: Individuen, funktionierende Software, Zusammenarbeit, Flexibilitaet",
-      "Methoden: Scrum, Kanban, Extreme Programming (XP)",
-      "Fokus auf Kundenfeedback und kontinuierliche Verbesserung"
-    ],
-    "sprechernotizen": "Agil bedeutet beweglich. Statt alles am Anfang zu planen (Wasserfall), wird in Sprints gearbeitet. Das agile Manifest von 2001 definiert die Grundwerte.",
-    "kategorie": "Projektmanagement",
-    "id": 297
-  },
-  {
-    "titel": "Was ist Scrum und welche Rollen gibt es?",
-    "hauptpunkte": [
-      "Product Owner: Vertritt Kundenbeduerfnisse, priorisiert Backlog",
-      "Scrum Master: Coacht Team, beseitigt Hindernisse",
-      "Entwicklungsteam: Selbstorganisiert, liefert Produktinkrement",
-      "Artefakte: Product Backlog, Sprint Backlog, Inkrement"
-    ],
-    "sprechernotizen": "Scrum arbeitet in Sprints (meist 2-4 Wochen). Der Product Owner entscheidet WAS entwickelt wird, das Team entscheidet WIE.",
-    "kategorie": "Projektmanagement",
-    "id": 298
-  },
-  {
-    "titel": "Was ist Kanban?",
-    "hauptpunkte": [
-      "Visualisierung des Arbeitsflusses auf einem Board",
-      "Spalten: To Do, In Progress, Done (erweiterbar)",
-      "WIP-Limit: Begrenzung gleichzeitiger Aufgaben pro Spalte",
-      "Kontinuierlicher Fluss statt fester Iterationen"
-    ],
-    "sprechernotizen": "Kanban kommt aus der japanischen Produktion (Toyota). Das WIP-Limit verhindert Ueberlastung und macht Engpaesse sichtbar.",
-    "kategorie": "Projektmanagement",
-    "id": 299
-  },
-  {
-    "titel": "Was ist DevOps?",
-    "hauptpunkte": [
-      "Kombination aus Development und Operations",
-      "Automatisierung: CI/CD-Pipelines fuer kontinuierliche Integration und Deployment",
-      "Infrastructure as Code (IaC): Infrastruktur wird wie Software verwaltet",
-      "Kulturwandel: Entwicklung und Betrieb arbeiten eng zusammen"
-    ],
-    "sprechernotizen": "DevOps bricht die traditionelle Trennung zwischen Entwicklern und Administratoren auf. Tools wie Git, Jenkins, Docker, Kubernetes sind typisch.",
-    "kategorie": "Cloud/Virtualisierung",
-    "id": 300
-  },
-  {
-    "titel": "Was ist Git und wie funktioniert Versionskontrolle?",
-    "hauptpunkte": [
-      "Verteiltes Versionskontrollsystem fuer Quellcode",
-      "Repository: Sammlung aller Dateien und Versionshistorie",
-      "Branching: Parallele Entwicklungszweige (Feature-Branches)",
-      "Wichtige Befehle: clone, add, commit, push, pull, merge"
-    ],
-    "sprechernotizen": "Git speichert Snapshots des Projekts. Branches erlauben es, Features isoliert zu entwickeln und spaeter zusammenzufuehren (Merge).",
-    "kategorie": "Allgemein",
-    "id": 301
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen IPv4 und IPv6?",
-    "hauptpunkte": [
-      "IPv4: 32 Bit Adresslaenge, ca. 4,3 Milliarden Adressen",
-      "IPv6: 128 Bit Adresslaenge, nahezu unbegrenzte Adressen",
-      "IPv4-Notation: Dezimal mit Punkten (z.B. 192.168.1.1)",
-      "IPv6-Notation: Hexadezimal mit Doppelpunkten (z.B. 2001:0db8::1)"
-    ],
-    "sprechernotizen": "IPv4-Adressen sind weltweit knapp geworden. IPv6 wurde entwickelt, um dieses Problem zu loesen. IPv6 bietet zusaetzlich verbesserte Sicherheit (IPsec integriert) und effizienteres Routing.",
-    "kategorie": "Netzwerktechnik",
-    "id": 302
-  },
-  {
-    "titel": "Was ist Subnetting und wozu dient es?",
-    "hauptpunkte": [
-      "Unterteilung eines Netzwerks in kleinere logische Segmente",
-      "Subnetzmaske bestimmt Netz- und Hostanteil der IP-Adresse",
-      "CIDR-Notation: z.B. /24 entspricht 255.255.255.0",
-      "Vorteile: Bessere Verwaltung, erhoehte Sicherheit, weniger Broadcast-Traffic"
-    ],
-    "sprechernotizen": "Beim Subnetting wird ein grosses Netzwerk in kleinere Subnetze aufgeteilt. Bei /24 sind die ersten 24 Bit fuer das Netz reserviert, die letzten 8 Bit fuer Hosts (254 nutzbare Adressen).",
-    "kategorie": "Netzwerktechnik",
-    "id": 303
-  },
-  {
-    "titel": "Erklaere die Funktion von NAT (Network Address Translation).",
-    "hauptpunkte": [
-      "Uebersetzt private IP-Adressen in oeffentliche Adressen",
-      "Ermoeglicht mehreren Geraeten die Nutzung einer oeffentlichen IP",
-      "PAT (Port Address Translation): Unterscheidung ueber Portnummern",
-      "Erhoeht die Sicherheit durch Verstecken interner Netzwerkstruktur"
-    ],
-    "sprechernotizen": "NAT wird typischerweise am Router eingesetzt. Private IP-Bereiche (10.x.x.x, 172.16-31.x.x, 192.168.x.x) sind im Internet nicht routbar.",
-    "kategorie": "Netzwerktechnik",
-    "id": 304
-  },
-  {
-    "titel": "Was ist RAID und welche Level gibt es?",
-    "hauptpunkte": [
-      "RAID 0 (Striping): Hohe Geschwindigkeit, keine Redundanz",
-      "RAID 1 (Mirroring): Vollstaendige Spiegelung, 50% Kapazitaetsverlust",
-      "RAID 5: Verteilte Paritaet, min. 3 Festplatten, 1 darf ausfallen",
-      "RAID 6: Doppelte Paritaet, min. 4 Festplatten, 2 duerfen ausfallen"
-    ],
-    "sprechernotizen": "RAID (Redundant Array of Independent Disks) kombiniert mehrere Festplatten zu einem logischen Laufwerk. RAID ersetzt KEIN Backup!",
-    "kategorie": "Hardware",
-    "id": 305
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen symmetrischer und asymmetrischer Verschluesselung?",
-    "hauptpunkte": [
-      "Symmetrisch: Ein Schluessel fuer Ver- und Entschluesselung (z.B. AES)",
-      "Asymmetrisch: Schluesselpaar aus oeffentlichem und privatem Schluessel (z.B. RSA)",
-      "Symmetrisch: Schneller, Problem bei Schluesselaustausch",
-      "Asymmetrisch: Langsamer, loest Schluesselaustauschproblem"
-    ],
-    "sprechernotizen": "In der Praxis werden beide kombiniert (Hybridverfahren). So funktioniert z.B. TLS/HTTPS.",
-    "kategorie": "IT-Sicherheit",
-    "id": 306
-  },
-  {
-    "titel": "Was ist ein Hash-Wert und wofuer wird er verwendet?",
-    "hauptpunkte": [
-      "Einweg-Funktion: Aus Daten wird feste Zeichenfolge erzeugt",
-      "Kollisionsresistenz: Verschiedene Eingaben sollten verschiedene Hashes ergeben",
-      "Anwendungen: Passwort-Speicherung, Integritaetspruefung, digitale Signaturen",
-      "Gaengige Algorithmen: SHA-256, SHA-3 (MD5 und SHA-1 gelten als unsicher)"
-    ],
-    "sprechernotizen": "Ein Hash-Wert ist wie ein digitaler Fingerabdruck. Passwoerter werden nie im Klartext gespeichert, sondern als Hash.",
-    "kategorie": "IT-Sicherheit",
-    "id": 307
-  },
-  {
-    "titel": "Was ist ein digitales Zertifikat und wie funktioniert PKI?",
-    "hauptpunkte": [
-      "Zertifikat: Elektronischer Ausweis mit oeffentlichem Schluessel und Identitaet",
-      "CA (Certificate Authority): Vertrauenswuerdige Stelle, die Zertifikate ausstellt",
-      "PKI (Public Key Infrastructure): System zur Verwaltung digitaler Zertifikate",
-      "Chain of Trust: Hierarchie von Zertifikaten bis zur Root-CA"
-    ],
-    "sprechernotizen": "Wenn du eine HTTPS-Website besuchst, prueft dein Browser das Zertifikat. Let's Encrypt ist eine bekannte kostenlose CA.",
-    "kategorie": "IT-Sicherheit",
-    "id": 308
-  },
-  {
-    "titel": "Erklaere den Unterschied zwischen TCP und UDP.",
-    "hauptpunkte": [
-      "TCP: Verbindungsorientiert, garantierte Zustellung, Reihenfolge gesichert",
-      "UDP: Verbindungslos, keine Zustellgarantie, geringerer Overhead",
-      "TCP: 3-Wege-Handshake (SYN, SYN-ACK, ACK)",
-      "UDP: Ideal fuer Streaming, VoIP, DNS-Anfragen, Online-Gaming"
-    ],
-    "sprechernotizen": "TCP ist wie ein Einschreiben - du weisst, dass es angekommen ist. UDP ist wie eine Postkarte - schneller, aber keine Garantie.",
-    "kategorie": "Netzwerktechnik",
-    "id": 309
-  },
-  {
-    "titel": "Was ist DHCP und wie funktioniert der DORA-Prozess?",
-    "hauptpunkte": [
-      "DHCP vergibt automatisch IP-Adressen an Clients",
-      "D - Discover: Client sucht per Broadcast nach DHCP-Server",
-      "O - Offer: Server bietet eine IP-Adresse an",
-      "R - Request: Client fordert die angebotene Adresse an",
-      "A - Acknowledge: Server bestaetigt die Vergabe"
-    ],
-    "sprechernotizen": "DHCP erleichtert die Netzwerkverwaltung enorm. Die Lease-Zeit bestimmt, wie lange die IP gueltig ist.",
-    "kategorie": "Netzwerktechnik",
-    "id": 310
-  },
-  {
-    "titel": "Was ist DNS und wie funktioniert die Namensaufloesung?",
-    "hauptpunkte": [
-      "DNS uebersetzt Domainnamen in IP-Adressen",
-      "Hierarchische Struktur: Root-Server, TLD-Server, Autoritativer Server",
-      "Rekursive Abfrage: DNS-Resolver fragt schrittweise die Hierarchie ab",
-      "Caching: Ergebnisse werden zwischengespeichert (TTL)"
-    ],
-    "sprechernotizen": "Wenn du www.example.de eingibst, fragt dein Rechner den DNS-Resolver. Das Ergebnis wird gecacht, um zukuenftige Anfragen zu beschleunigen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 311
-  },
-  {
-    "titel": "Was ist ein VPN und welche Arten gibt es?",
-    "hauptpunkte": [
-      "VPN: Sichere, verschluesselte Verbindung ueber oeffentliche Netze",
-      "Site-to-Site: Verbindet zwei Netzwerke (z.B. Firmenzentralen)",
-      "End-to-Site (Remote Access): Einzelner Benutzer verbindet sich mit Firmennetz",
-      "Protokolle: IPsec, OpenVPN, WireGuard, SSL/TLS"
-    ],
-    "sprechernotizen": "VPN erstellt einen verschluesselten Tunnel durch das Internet. Fuer Homeoffice-Mitarbeiter ist End-to-Site-VPN Standard.",
-    "kategorie": "Netzwerktechnik",
-    "id": 312
-  },
-  {
-    "titel": "Was ist eine DMZ (Demilitarisierte Zone)?",
-    "hauptpunkte": [
-      "Netzwerksegment zwischen internem Netz und Internet",
-      "Enthaelt oeffentlich erreichbare Server (Webserver, Mailserver)",
-      "Zwei Firewalls: Eine zum Internet, eine zum internen Netz",
-      "Bei Kompromittierung bleibt internes Netz geschuetzt"
-    ],
-    "sprechernotizen": "Die DMZ ist ein Pufferbereich. Selbst wenn ein Angreifer einen DMZ-Server hackt, muss er noch die innere Firewall ueberwinden.",
-    "kategorie": "IT-Sicherheit",
-    "id": 313
-  },
-  {
-    "titel": "Was ist ein Container und wie unterscheidet er sich von einer VM?",
-    "hauptpunkte": [
-      "Container: Leichtgewichtige Isolation auf Betriebssystemebene",
-      "VM: Vollstaendige Virtualisierung mit eigenem Betriebssystem",
-      "Container starten in Sekunden, VMs brauchen Minuten",
-      "Container teilen sich den Kernel, VMs haben jeweils eigenen"
-    ],
-    "sprechernotizen": "Container (z.B. Docker) sind effizienter als VMs, da sie den Kernel des Host-Systems nutzen. VMs bieten staerkere Isolation.",
-    "kategorie": "Cloud/Virtualisierung",
-    "id": 314
-  },
-  {
-    "titel": "Was ist Active Directory (AD)?",
-    "hauptpunkte": [
-      "Zentraler Verzeichnisdienst von Microsoft",
-      "Verwaltung von Benutzern, Gruppen, Computern und Ressourcen",
-      "Gruppenrichtlinien (GPO): Zentrale Konfiguration und Sicherheitseinstellungen",
-      "Domaenenstruktur: Organisationseinheiten (OU), Domaenen, Forests"
-    ],
-    "sprechernotizen": "AD ist das Herzstueck der Windows-Netzwerkverwaltung in Unternehmen. Benutzer melden sich einmal an (Single Sign-On).",
-    "kategorie": "Netzwerktechnik",
-    "id": 315
-  },
-  {
-    "titel": "Was sind die wichtigsten HTTP-Statuscodes?",
-    "hauptpunkte": [
-      "2xx Erfolg: 200 OK, 201 Created, 204 No Content",
-      "3xx Umleitung: 301 Moved Permanently, 302 Found, 304 Not Modified",
-      "4xx Client-Fehler: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found",
-      "5xx Server-Fehler: 500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable"
-    ],
-    "sprechernotizen": "HTTP-Statuscodes zeigen das Ergebnis einer Anfrage. 200 bedeutet alles OK. 404 heisst die Ressource existiert nicht.",
-    "kategorie": "Netzwerktechnik",
-    "id": 316
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen SSH und Telnet?",
-    "hauptpunkte": [
-      "SSH: Verschluesselte Verbindung (Port 22), sicher",
-      "Telnet: Unverschluesselt (Port 23), unsicher",
-      "SSH unterstuetzt Authentifizierung per Schluessel",
-      "SSH kann auch fuer Dateiuebertragung (SCP, SFTP) genutzt werden"
-    ],
-    "sprechernotizen": "Telnet uebertraegt alles im Klartext. SSH ist Standard fuer die sichere Fernwartung von Linux-Servern.",
-    "kategorie": "Netzwerktechnik",
-    "id": 317
-  },
-  {
-    "titel": "Was ist ein Proxy-Server und welche Arten gibt es?",
-    "hauptpunkte": [
-      "Vermittler zwischen Client und Zielserver",
-      "Forward-Proxy: Clients nutzen ihn fuer ausgehende Anfragen",
-      "Reverse-Proxy: Steht vor Servern, verteilt Last, erhoeht Sicherheit",
-      "Funktionen: Caching, Filterung, Anonymisierung, Load Balancing"
-    ],
-    "sprechernotizen": "Ein Forward-Proxy in Unternehmen kann Webinhalte filtern und cachen. Ein Reverse-Proxy wie nginx verteilt Anfragen auf mehrere Backend-Server.",
-    "kategorie": "Netzwerktechnik",
-    "id": 318
-  },
-  {
-    "titel": "Was ist VLAN und wozu wird es eingesetzt?",
-    "hauptpunkte": [
-      "Logische Trennung eines physischen Netzwerks",
-      "Broadcast-Domaenen werden verkleinert",
-      "Erhoehte Sicherheit durch Isolation von Netzwerksegmenten",
-      "802.1Q-Tagging: VLAN-ID im Ethernet-Frame"
-    ],
-    "sprechernotizen": "Mit VLANs kann man z.B. Buchhaltung und Entwicklung im gleichen physischen Switch trennen. Kommunikation zwischen VLANs ist nur ueber einen Router moeglich.",
-    "kategorie": "Netzwerktechnik",
-    "id": 319
-  },
-  {
-    "titel": "Was sind die Schichten des TCP/IP-Modells?",
-    "hauptpunkte": [
-      "Schicht 4: Anwendungsschicht (HTTP, FTP, SMTP, DNS)",
-      "Schicht 3: Transportschicht (TCP, UDP)",
-      "Schicht 2: Internetschicht (IP, ICMP, ARP)",
-      "Schicht 1: Netzzugangsschicht (Ethernet, WLAN)"
-    ],
-    "sprechernotizen": "Das TCP/IP-Modell ist die praktische Variante des theoretischen OSI-Modells. Es fasst die 7 OSI-Schichten zu 4 zusammen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 320
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen Authentifizierung und Autorisierung?",
-    "hauptpunkte": [
-      "Authentifizierung: Wer bist du? (Identitaetspruefung)",
-      "Autorisierung: Was darfst du? (Berechtigungspruefung)",
-      "Authentifizierung erfolgt vor Autorisierung",
-      "Faktoren: Wissen (Passwort), Besitz (Token), Biometrie (Fingerabdruck)"
-    ],
-    "sprechernotizen": "Beispiel: Du meldest dich mit Benutzername und Passwort an (Authentifizierung). Danach prueft das System, ob du auf einen Ordner zugreifen darfst (Autorisierung).",
-    "kategorie": "IT-Sicherheit",
-    "id": 321
-  },
-  {
-    "titel": "Was ist SQL-Injection und wie schuetzt man sich davor?",
-    "hauptpunkte": [
-      "Angreifer schleust SQL-Code ueber Eingabefelder ein",
-      "Kann Daten auslesen, aendern oder loeschen",
-      "Schutz: Prepared Statements / Parametrisierte Abfragen",
-      "Zusaetzlich: Eingabevalidierung, Least-Privilege-Prinzip fuer DB-User"
-    ],
-    "sprechernotizen": "Klassisches Beispiel: Im Login-Feld wird ' OR '1'='1 eingegeben. Prepared Statements trennen SQL-Befehl von Daten.",
-    "kategorie": "IT-Sicherheit",
-    "id": 322
-  },
-  {
-    "titel": "Was ist XSS (Cross-Site Scripting)?",
-    "hauptpunkte": [
-      "Einschleusen von boesartigem JavaScript in Webseiten",
-      "Stored XSS: Script wird in Datenbank gespeichert",
-      "Reflected XSS: Script wird ueber URL-Parameter eingeschleust",
-      "Schutz: Output-Encoding, Content Security Policy (CSP)"
-    ],
-    "sprechernotizen": "Bei XSS fuehrt der Browser des Opfers das eingeschleuste Script aus. Alle Benutzereingaben muessen vor der Ausgabe escaped werden.",
-    "kategorie": "IT-Sicherheit",
-    "id": 323
-  },
-  {
-    "titel": "Was ist ein Datenbankindex und wann sollte man ihn verwenden?",
-    "hauptpunkte": [
-      "Datenstruktur zur Beschleunigung von Suchanfragen",
-      "Vergleichbar mit Stichwortverzeichnis in einem Buch",
-      "Vorteil: Schnellere SELECT-Abfragen",
-      "Nachteil: Zusaetzlicher Speicherplatz, langsamere INSERT/UPDATE"
-    ],
-    "sprechernotizen": "Ein Index sollte auf Spalten erstellt werden, nach denen haeufig gesucht wird. Primaerschluessel haben automatisch einen Index.",
-    "kategorie": "Datenbanken",
-    "id": 324
-  },
-  {
-    "titel": "Was ist ein JOIN in SQL und welche Typen gibt es?",
-    "hauptpunkte": [
-      "INNER JOIN: Nur uebereinstimmende Datensaetze beider Tabellen",
-      "LEFT JOIN: Alle aus linker Tabelle + Matches aus rechter",
-      "RIGHT JOIN: Alle aus rechter Tabelle + Matches aus linker",
-      "FULL OUTER JOIN: Alle Datensaetze aus beiden Tabellen"
-    ],
-    "sprechernotizen": "JOINs verknuepfen Tabellen ueber gemeinsame Spalten. INNER JOIN ist am haeufigsten - du bekommst nur Datensaetze, die in beiden Tabellen vorkommen.",
-    "kategorie": "Datenbanken",
-    "id": 325
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen TRUNCATE, DELETE und DROP?",
-    "hauptpunkte": [
-      "DELETE: Loescht Zeilen (mit WHERE filterbar), langsamer, Rollback moeglich",
-      "TRUNCATE: Loescht alle Zeilen, schneller, kein WHERE, kein Rollback",
-      "DROP: Loescht die gesamte Tabelle inkl. Struktur",
-      "DELETE ist DML, TRUNCATE und DROP sind DDL"
-    ],
-    "sprechernotizen": "DELETE protokolliert jede geloeschte Zeile einzeln. TRUNCATE setzt die Tabelle einfach zurueck. DROP entfernt die Tabelle komplett.",
-    "kategorie": "Datenbanken",
-    "id": 326
-  },
-  {
-    "titel": "Was ist ein Entity-Relationship-Diagramm (ERD)?",
-    "hauptpunkte": [
-      "Grafische Darstellung von Datenbankstrukturen",
-      "Entitaeten (Rechtecke): Objekte wie Kunde, Produkt",
-      "Attribute (Ovale): Eigenschaften wie Name, Preis",
-      "Beziehungen (Rauten): 1:1, 1:n, m:n Kardinalitaeten"
-    ],
-    "sprechernotizen": "Das ERD wird in der Analysephase erstellt, bevor die Datenbank implementiert wird. Es zeigt, welche Daten gespeichert werden und wie sie zusammenhaengen.",
-    "kategorie": "Datenbanken",
-    "id": 327
-  },
-  {
-    "titel": "Was ist Agile Softwareentwicklung?",
-    "hauptpunkte": [
-      "Iteratives und inkrementelles Vorgehen in kurzen Zyklen",
-      "Agiles Manifest: Individuen, funktionierende Software, Zusammenarbeit, Flexibilitaet",
-      "Methoden: Scrum, Kanban, Extreme Programming (XP)",
-      "Fokus auf Kundenfeedback und kontinuierliche Verbesserung"
-    ],
-    "sprechernotizen": "Agil bedeutet beweglich. Statt alles am Anfang zu planen (Wasserfall), wird in Sprints gearbeitet. Das agile Manifest von 2001 definiert die Grundwerte.",
-    "kategorie": "Projektmanagement",
-    "id": 328
-  },
-  {
-    "titel": "Was ist Scrum und welche Rollen gibt es?",
-    "hauptpunkte": [
-      "Product Owner: Vertritt Kundenbeduerfnisse, priorisiert Backlog",
-      "Scrum Master: Coacht Team, beseitigt Hindernisse",
-      "Entwicklungsteam: Selbstorganisiert, liefert Produktinkrement",
-      "Artefakte: Product Backlog, Sprint Backlog, Inkrement"
-    ],
-    "sprechernotizen": "Scrum arbeitet in Sprints (meist 2-4 Wochen). Der Product Owner entscheidet WAS entwickelt wird, das Team entscheidet WIE.",
-    "kategorie": "Projektmanagement",
-    "id": 329
-  },
-  {
-    "titel": "Was ist Kanban?",
-    "hauptpunkte": [
-      "Visualisierung des Arbeitsflusses auf einem Board",
-      "Spalten: To Do, In Progress, Done (erweiterbar)",
-      "WIP-Limit: Begrenzung gleichzeitiger Aufgaben pro Spalte",
-      "Kontinuierlicher Fluss statt fester Iterationen"
-    ],
-    "sprechernotizen": "Kanban kommt aus der japanischen Produktion (Toyota). Das WIP-Limit verhindert Ueberlastung und macht Engpaesse sichtbar.",
-    "kategorie": "Projektmanagement",
-    "id": 330
-  },
-  {
-    "titel": "Was ist DevOps?",
-    "hauptpunkte": [
-      "Kombination aus Development und Operations",
-      "Automatisierung: CI/CD-Pipelines fuer kontinuierliche Integration und Deployment",
-      "Infrastructure as Code (IaC): Infrastruktur wird wie Software verwaltet",
-      "Kulturwandel: Entwicklung und Betrieb arbeiten eng zusammen"
-    ],
-    "sprechernotizen": "DevOps bricht die traditionelle Trennung zwischen Entwicklern und Administratoren auf. Tools wie Git, Jenkins, Docker, Kubernetes sind typisch.",
-    "kategorie": "Cloud/Virtualisierung",
-    "id": 331
-  },
-  {
-    "titel": "Was ist Git und wie funktioniert Versionskontrolle?",
-    "hauptpunkte": [
-      "Verteiltes Versionskontrollsystem fuer Quellcode",
-      "Repository: Sammlung aller Dateien und Versionshistorie",
-      "Branching: Parallele Entwicklungszweige (Feature-Branches)",
-      "Wichtige Befehle: clone, add, commit, push, pull, merge"
-    ],
-    "sprechernotizen": "Git speichert Snapshots des Projekts. Branches erlauben es, Features isoliert zu entwickeln und spaeter zusammenzufuehren (Merge).",
-    "kategorie": "Allgemein",
-    "id": 332
-  },
-  {
-    "titel": "Was bedeuten die Abkürzungen ADSL, VDSL und SDSL?",
-    "hauptpunkte": [
-      "ADSL (Asymmetric DSL): Unterschiedliche Upload-/Download-Geschwindigkeit, Download schneller.",
-      "VDSL (Very High Speed DSL): Sehr hohe Geschwindigkeiten, oft für Glasfaser-Nahbereich.",
-      "SDSL (Symmetric DSL): Gleiche Upload- und Download-Geschwindigkeit."
-    ],
-    "sprechernotizen": "DSL-Techniken zur Datenübertragung über Telefonleitungen. ADSL ist für Privatkunden typisch (mehr Download), SDSL für Geschäftskunden (symmetrisch für Server-Hosting). VDSL bietet die höchsten Geschwindigkeiten.",
-    "kategorie": "Netzwerktechnik",
-    "id": 333
-  },
-  {
-    "titel": "Was ist APIPA (Automatic Private IP Addressing)?",
-    "hauptpunkte": [
-      "Windows-Feature zur automatischen IP-Vergabe bei fehlendem DHCP-Server.",
-      "Vergibt IP-Adressen aus dem Bereich 169.254.x.x.",
-      "Ermöglicht lokale Kommunikation ohne manuelles Konfigurieren.",
-      "Kein Internetzugang möglich mit APIPA-Adresse."
-    ],
-    "sprechernotizen": "Wenn ein Windows-PC keine IP vom DHCP-Server erhält, weist er sich selbst eine APIPA-Adresse zu. Dies erkennt man an der 169.254.x.x-Adresse. Es ist oft ein Hinweis auf ein Netzwerkproblem (Kabel, DHCP-Server nicht erreichbar).",
-    "kategorie": "Netzwerktechnik",
-    "id": 334
-  },
-  {
-    "titel": "Was ist das ARP (Address Resolution Protocol)?",
-    "hauptpunkte": [
-      "Ermittelt die physische MAC-Adresse zu einer bekannten IP-Adresse.",
-      "Arbeitet im lokalen Netzwerk (Layer 2/3 Brücke).",
-      "Speichert Zuordnungen im ARP-Cache.",
-      "Befehl: arp -a zeigt den Cache an."
-    ],
-    "sprechernotizen": "ARP ist essenziell für die Kommunikation im LAN. Wenn ein Gerät die IP-Adresse kennt, aber nicht die MAC-Adresse, sendet es eine ARP-Anfrage ins Netzwerk. Das Zielgerät antwortet mit seiner MAC-Adresse, die dann im Cache gespeichert wird.",
-    "kategorie": "Netzwerktechnik",
-    "id": 335
-  },
-  {
-    "titel": "Was ist DHCP (Dynamic Host Configuration Protocol)?",
-    "hauptpunkte": [
-      "Protokoll zur automatischen Zuweisung von IP-Adressen.",
-      "Vergibt auch DNS-Server, Gateway und Subnetzmaske.",
-      "Lease-Zeit: IP-Adressen werden zeitlich begrenzt vergeben.",
-      "DORA-Prozess: Discover, Offer, Request, Acknowledge."
-    ],
-    "sprechernotizen": "DHCP erspart die manuelle IP-Konfiguration. Der DHCP-Server verwaltet einen Pool von IP-Adressen und vergibt diese an anfragende Clients. Nach Ablauf der Lease-Zeit muss die Adresse erneuert werden.",
-    "kategorie": "Netzwerktechnik",
-    "id": 336
-  },
-  {
-    "titel": "Was ist eine DMZ (Demilitarisierte Zone)?",
-    "hauptpunkte": [
-      "Abgeschirmtes Subnetz zwischen internem und externem Netz.",
-      "Durch Firewalls vom internen Netz getrennt.",
-      "Beherbergt öffentlich erreichbare Dienste (Webserver, Mailserver).",
-      "Schützt das interne Netz bei Kompromittierung der DMZ-Server."
-    ],
-    "sprechernotizen": "Die DMZ ist ein Sicherheitskonzept. Öffentliche Server stehen in der DMZ, sodass Angreifer bei einem erfolgreichen Angriff nicht direkt ins interne Netz gelangen. Typische Architektur: Internet → Firewall → DMZ → Firewall → LAN.",
-    "kategorie": "Netzwerktechnik",
-    "id": 337
-  },
-  {
-    "titel": "Was ist das DNS (Domain Name System)?",
-    "hauptpunkte": [
-      "Dient der Namensauflösung (Domain → IP-Adresse).",
-      "Übersetzt menschenlesbare Namen in IP-Adressen.",
-      "Hierarchisches System (Root → TLD → Domain).",
-      "Werkzeug zur Prüfung: nslookup."
-    ],
-    "sprechernotizen": "DNS ist das 'Telefonbuch des Internets'. Statt sich 142.250.185.99 zu merken, tippt man www.google.de. Der DNS-Server löst den Namen zur IP auf. Ohne DNS wäre das Internet für Menschen kaum nutzbar.",
-    "kategorie": "Netzwerktechnik",
-    "id": 338
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen HTTP und HTTPS?",
-    "hauptpunkte": [
-      "HTTP (Hypertext Transfer Protocol): Unverschlüsselte Webübertragung.",
-      "HTTPS (HTTP Secure): Verschlüsselte Übertragung via SSL/TLS.",
-      "HTTPS nutzt Port 443, HTTP nutzt Port 80.",
-      "HTTPS schützt vor Man-in-the-Middle-Angriffen."
-    ],
-    "sprechernotizen": "HTTPS ist heute Standard für alle Webseiten. Das Schloss-Symbol im Browser zeigt die verschlüsselte Verbindung an. Bei HTTP können Passwörter und Daten im Klartext mitgelesen werden.",
-    "kategorie": "Netzwerktechnik",
-    "id": 339
-  },
-  {
-    "titel": "Was ist ICMP (Internet Control Message Protocol)?",
-    "hauptpunkte": [
-      "Protokoll für Status- und Fehlermeldungen im Netzwerk.",
-      "Wird vom Befehl 'ping' verwendet.",
-      "Meldet z.B. 'Ziel nicht erreichbar' oder 'Zeit überschritten'.",
-      "Kein Transportprotokoll, nur für Diagnose."
-    ],
-    "sprechernotizen": "ICMP ist das Diagnose-Werkzeug des Netzwerks. Der ping-Befehl sendet ICMP Echo Requests und wartet auf Echo Replies. Auch tracert nutzt ICMP, um den Weg der Pakete zu verfolgen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 340
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen IMAP und POP3?",
-    "hauptpunkte": [
-      "IMAP: E-Mails verbleiben auf dem Server, Synchronisation möglich.",
-      "POP3: E-Mails werden auf das Gerät heruntergeladen (und oft vom Server gelöscht).",
-      "IMAP ideal für mehrere Geräte (Handy, PC, Tablet).",
-      "POP3 für Offline-Nutzung und begrenzte Speicherplatz am Server."
-    ],
-    "sprechernotizen": "Mit IMAP bleiben alle E-Mails auf dem Server und werden synchronisiert - ideal wenn man mit mehreren Geräten arbeitet. Bei POP3 werden Mails heruntergeladen und sind dann nur lokal verfügbar.",
-    "kategorie": "Netzwerktechnik",
-    "id": 341
-  },
-  {
-    "titel": "Was ist MIMO (Multiple Input Multiple Output)?",
-    "hauptpunkte": [
-      "Verfahren in der drahtlosen Übertragung (WLAN).",
-      "Nutzt mehrere Sende- und Empfangsantennen parallel.",
-      "Erhöht den Datendurchsatz erheblich.",
-      "Standard bei modernen WLAN-Routern (802.11n, ac, ax)."
-    ],
-    "sprechernotizen": "MIMO ermöglicht höhere Geschwindigkeiten im WLAN, indem mehrere Datenströme gleichzeitig über verschiedene Antennen gesendet werden. Ein Router mit 4x4 MIMO hat vier Sende- und vier Empfangsantennen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 342
-  },
-  {
-    "titel": "Was ist PoE (Power over Ethernet)?",
-    "hauptpunkte": [
-      "Stromversorgung von Netzwerkgeräten über das Ethernet-Kabel.",
-      "Kein separates Netzteil nötig.",
-      "Typische Anwendungen: IP-Kameras, WLAN-Access-Points, IP-Telefone.",
-      "Standards: PoE (15,4W), PoE+ (25,5W), PoE++ (bis 90W)."
-    ],
-    "sprechernotizen": "PoE vereinfacht die Installation von Netzwerkgeräten, da nur ein Kabel für Daten UND Strom verlegt werden muss. Ein PoE-fähiger Switch versorgt die angeschlossenen Geräte mit Strom.",
-    "kategorie": "Netzwerktechnik",
-    "id": 343
-  },
-  {
-    "titel": "Was ist PPPoE (Point-to-Point Protocol over Ethernet)?",
-    "hauptpunkte": [
-      "Protokoll zum Aufbau einer Netzwerkverbindung über Ethernet.",
-      "Häufig für DSL-Anschlüsse genutzt.",
-      "Ermöglicht Authentifizierung beim Provider.",
-      "Router wählt sich mit Benutzername/Passwort beim ISP ein."
-    ],
-    "sprechernotizen": "PPPoE wird bei den meisten deutschen DSL-Anschlüssen verwendet. Der Router baut eine PPPoE-Verbindung zum Provider auf und authentifiziert sich mit den Zugangsdaten.",
-    "kategorie": "Netzwerktechnik",
-    "id": 344
-  },
-  {
-    "titel": "Was ist QoS (Quality of Service)?",
-    "hauptpunkte": [
-      "Techniken zur Priorisierung von Datenverkehr.",
-      "Sichert Qualität für zeitkritische Anwendungen (VoIP, Video).",
-      "Verhindert Ruckeln bei Telefonie durch Bandbreitenreservierung.",
-      "Kann bestimmten Anwendungen Vorrang geben."
-    ],
-    "sprechernotizen": "QoS ist wichtig in Netzwerken mit gemischtem Verkehr. VoIP-Telefonie braucht gleichmäßige, niedrige Latenz. QoS stellt sicher, dass ein großer Download die Sprachqualität nicht beeinträchtigt.",
-    "kategorie": "Netzwerktechnik",
-    "id": 345
-  },
-  {
-    "titel": "Was ist RADIUS (Remote Authentication Dial-In User Service)?",
-    "hauptpunkte": [
-      "Server-Dienst zur zentralen Authentifizierung von Benutzern.",
-      "Häufig in WPA2-Enterprise WLAN-Umgebungen genutzt.",
-      "Prüft Benutzername/Passwort oder Zertifikate zentral.",
-      "Ermöglicht detailliertes Logging der Anmeldungen."
-    ],
-    "sprechernotizen": "In Unternehmen nutzt man WPA2-Enterprise mit RADIUS statt eines gemeinsamen WLAN-Passworts. Jeder Mitarbeiter meldet sich mit seinen persönlichen Zugangsdaten an, was mehr Sicherheit und Nachvollziehbarkeit bietet.",
-    "kategorie": "Netzwerktechnik",
-    "id": 346
-  },
-  {
-    "titel": "Was ist SMTP (Simple Mail Transfer Protocol)?",
-    "hauptpunkte": [
-      "Standardprotokoll zum Versenden von E-Mails.",
-      "Ports: 25 (unverschlüsselt), 465/587 (verschlüsselt).",
-      "SMTPS: Verschlüsselte Variante mit TLS.",
-      "Nur für den Versand, nicht für den Empfang."
-    ],
-    "sprechernotizen": "SMTP ist das Protokoll, mit dem E-Mails versendet werden. Der E-Mail-Client verbindet sich mit dem SMTP-Server des Providers, der die Mail dann weiterleitet. Für den Empfang nutzt man IMAP oder POP3.",
-    "kategorie": "Netzwerktechnik",
-    "id": 347
-  },
-  {
-    "titel": "Was ist SNMP (Simple Network Management Protocol)?",
-    "hauptpunkte": [
-      "Protokoll zur Überwachung und Steuerung von Netzwerkelementen.",
-      "Ermöglicht zentrale Verwaltung von Routern, Switches, Druckern.",
-      "Sammelt Statusdaten (CPU-Auslastung, Bandbreite, Fehler).",
-      "Versionen: SNMPv1, v2c (unsicher), v3 (verschlüsselt)."
-    ],
-    "sprechernotizen": "Mit SNMP kann ein Administrator von einer zentralen Konsole aus alle Netzwerkgeräte überwachen. Monitoring-Systeme wie Nagios oder PRTG nutzen SNMP, um Statusinformationen abzufragen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 348
-  },
-  {
-    "titel": "Was ist eine SSID (Service Set Identifier)?",
-    "hauptpunkte": [
-      "Der frei wählbare Name eines Funknetzwerks (WLAN).",
-      "Wird in der Liste verfügbarer Netzwerke angezeigt.",
-      "Kann versteckt werden (Hidden SSID), bietet aber keine echte Sicherheit.",
-      "Maximal 32 Zeichen lang."
-    ],
-    "sprechernotizen": "Die SSID ist der Name, den du siehst, wenn du nach WLANs suchst. Unternehmen sollten aussagekräftige Namen wählen. Das Verstecken der SSID ist kein Sicherheitsmerkmal, da sie leicht ermittelt werden kann.",
-    "kategorie": "Netzwerktechnik",
-    "id": 349
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen TCP und UDP?",
-    "hauptpunkte": [
-      "TCP: Verbindungsorientiert, zuverlässig, mit Fehlerbehebung.",
-      "UDP: Verbindungslos, schnell, ohne Fehlerkontrolle.",
-      "TCP für: Web, E-Mail, Dateiübertragung.",
-      "UDP für: Streaming, VoIP, Online-Gaming."
-    ],
-    "sprechernotizen": "TCP garantiert, dass alle Pakete ankommen und in der richtigen Reihenfolge sind - ideal für wichtige Daten. UDP ist schneller, weil es keine Bestätigungen abwartet - perfekt für Echtzeitanwendungen, wo ein verlorenes Paket egal ist.",
-    "kategorie": "Netzwerktechnik",
-    "id": 350
-  },
-  {
-    "titel": "Was ist ein VLAN (Virtual Local Area Network)?",
-    "hauptpunkte": [
-      "Logisches Teilnetz innerhalb eines physischen Netzwerks.",
-      "Segmentierung zur Erhöhung der Sicherheit und Performance.",
-      "Trennt Netzwerkverkehr ohne zusätzliche Hardware.",
-      "Konfiguration erfolgt am Switch (Port-basiert oder tagged)."
-    ],
-    "sprechernotizen": "Mit VLANs kann man ein physisches Netzwerk in mehrere logische Netze aufteilen. Beispiel: Buchhaltung und Produktion im selben Gebäude, aber in getrennten VLANs - sie können sich nicht gegenseitig sehen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 351
-  },
-  {
-    "titel": "Was ist ein VPN (Virtual Private Network)?",
-    "hauptpunkte": [
-      "Logisches, privates Netzwerk über öffentliche Netze.",
-      "Verschlüsselte Verbindung (Tunnel) zwischen zwei Punkten.",
-      "Technologien: IPsec, SSL-VPN, WireGuard, OpenVPN.",
-      "Anwendung: Homeoffice-Anbindung, sichere Standortvernetzung."
-    ],
-    "sprechernotizen": "Ein VPN ermöglicht sichere Verbindungen über das Internet. Mitarbeiter im Homeoffice verbinden sich per VPN mit dem Firmennetz und können so sicher auf interne Ressourcen zugreifen, als wären sie vor Ort.",
-    "kategorie": "Netzwerktechnik",
-    "id": 352
-  },
-  {
-    "titel": "Was sind WPA, WPA2 und WPA3?",
-    "hauptpunkte": [
-      "WPA: Verbesserung von WEP, nutzt TKIP-Verschlüsselung (veraltet).",
-      "WPA2: Standard mit AES-Verschlüsselung (sicher, verbreitet).",
-      "WPA3: Neuester Standard mit stärkerer Verschlüsselung.",
-      "Enterprise-Varianten nutzen RADIUS-Authentifizierung."
-    ],
-    "sprechernotizen": "WPA2 ist aktuell der Standard für WLAN-Sicherheit. WPA3 bietet zusätzlichen Schutz gegen Brute-Force-Angriffe und vereinfacht die Einrichtung. WEP und WPA gelten als unsicher und sollten nicht mehr verwendet werden.",
-    "kategorie": "Netzwerktechnik",
-    "id": 353
-  },
-  {
-    "titel": "Was ist das BIOS (Basic Input Output System)?",
-    "hauptpunkte": [
-      "Grundlegendes Startprogramm eines PCs.",
-      "Wird beim Einschalten als erstes ausgeführt.",
-      "Initialisiert Hardware und startet das Betriebssystem.",
-      "Heute weitgehend durch UEFI ersetzt."
-    ],
-    "sprechernotizen": "Das BIOS ist die Firmware auf dem Mainboard. Es prüft beim Start die Hardware (POST) und lädt dann den Bootloader des Betriebssystems. Bei modernen PCs übernimmt UEFI diese Aufgabe.",
-    "kategorie": "Hardware",
-    "id": 354
-  },
-  {
-    "titel": "Was ist ein HBA (Host-Bus-Adapter)?",
-    "hauptpunkte": [
-      "Schnittstellenkarte für Speicher- oder Netzwerksysteme.",
-      "Verbindet Computer mit SAN-Storage (z.B. Fibre Channel).",
-      "Entlastet die CPU bei I/O-Operationen.",
-      "Typisch in Servern und Rechenzentren."
-    ],
-    "sprechernotizen": "Ein HBA ist wie eine spezialisierte Netzwerkkarte für Speichersysteme. In Rechenzentren verbinden HBAs Server mit dem zentralen SAN-Storage über Fibre Channel oder iSCSI.",
-    "kategorie": "Hardware",
-    "id": 355
-  },
-  {
-    "titel": "Was ist der Unterschied zwischen HDD und SSD?",
-    "hauptpunkte": [
-      "HDD: Mechanische Festplatte mit rotierenden Scheiben.",
-      "SSD: Elektronisches Speichermedium ohne bewegliche Teile.",
-      "SSD ist deutlich schneller, aber teurer pro GB.",
-      "HDD bietet mehr Speicherplatz für weniger Geld."
-    ],
-    "sprechernotizen": "SSDs haben HDDs in den meisten Anwendungen abgelöst. Sie sind schneller, leiser, stoßunempfindlich und energiesparender. HDDs werden noch für große Datenspeicher oder Backups eingesetzt.",
-    "kategorie": "Hardware",
-    "id": 356
-  },
-  {
-    "titel": "Was ist NVMe (Non-Volatile Memory express)?",
-    "hauptpunkte": [
-      "Protokoll speziell für moderne SSDs entwickelt.",
-      "Nutzt die volle Geschwindigkeit des PCI-Express-Busses.",
-      "Deutlich schneller als SATA-Anschluss.",
-      "Typischer Formfaktor: M.2 oder U.2."
-    ],
-    "sprechernotizen": "NVMe ist der Nachfolger von SATA für SSDs. Während SATA auf ca. 550 MB/s limitiert ist, erreichen NVMe-SSDs über 7000 MB/s. Der Unterschied ist besonders beim Laden großer Dateien spürbar.",
-    "kategorie": "Hardware",
-    "id": 357
-  },
-  {
-    "titel": "Was ist S.M.A.R.T. (Self-Monitoring, Analysis and Reporting Technology)?",
-    "hauptpunkte": [
-      "Überwachungssystem für Festplatten und SSDs.",
-      "Dient der Früherkennung von Hardwaredefekten.",
-      "Protokolliert Werte wie Lesefehler, Temperatur, Betriebsstunden.",
-      "Kann vor drohendem Ausfall warnen."
-    ],
-    "sprechernotizen": "S.M.A.R.T. überwacht den Gesundheitszustand von Speichermedien. Tools können diese Werte auslesen und warnen, wenn kritische Schwellenwerte erreicht werden - Zeit für ein Backup und Austausch!",
-    "kategorie": "Hardware",
-    "id": 358
-  },
-  {
-    "titel": "Was ist SATA (Serial AT Attachment)?",
-    "hauptpunkte": [
-      "Weit verbreitete Schnittstelle für Festplatten und SSDs.",
-      "Übertragungsrate: SATA III = 6 Gbit/s (ca. 550 MB/s real).",
-      "Hot-Plug-fähig (Anschluss bei laufendem Betrieb möglich).",
-      "Wird für SSDs zunehmend durch NVMe ersetzt."
-    ],
-    "sprechernotizen": "SATA ist der Standard-Anschluss für Festplatten und 2,5-Zoll-SSDs. Die Geschwindigkeit ist für HDDs ausreichend, für SSDs jedoch ein Flaschenhals. Deshalb nutzen schnelle SSDs NVMe über M.2.",
-    "kategorie": "Hardware",
-    "id": 359
-  },
-  {
-    "titel": "Was ist UEFI (Unified Extensible Firmware Interface)?",
-    "hauptpunkte": [
-      "Moderner Nachfolger des BIOS.",
-      "Unterstützt Booten von großen Datenträgern (>2 TB).",
-      "Bietet grafische Oberfläche und Mausunterstützung.",
-      "Secure Boot schützt vor Bootkits und Rootkits."
-    ],
-    "sprechernotizen": "UEFI bietet viele Vorteile gegenüber dem klassischen BIOS: schnelleres Booten, GPT-Partitionierung für große Festplatten, Secure Boot für mehr Sicherheit und eine benutzerfreundlichere Oberfläche.",
-    "kategorie": "Hardware",
-    "id": 360
-  },
-  {
-    "titel": "Was ist eine USV (Unterbrechungsfreie Stromversorgung)?",
-    "hauptpunkte": [
-      "Schützt IT-Komponenten vor Stromausfällen und Störungen.",
-      "Klasse VFI (Online): Dauerbetrieb über Wechselrichter.",
-      "Klasse VI (Line-Interactive): Spannungsregulierung bei Schwankungen.",
-      "Klasse VFD (Offline): Umschaltung bei Stromausfall."
-    ],
-    "sprechernotizen": "Eine USV überbrückt Stromausfälle und ermöglicht ein sauberes Herunterfahren. VFI ist am sichersten (für Server), VFD am günstigsten (für Arbeitsplätze). Die USV sollte regelmäßig getestet werden.",
-    "kategorie": "Hardware",
-    "id": 361
-  },
-  {
-    "titel": "Was ist ALM (Application Lifecycle Management)?",
-    "hauptpunkte": [
-      "Ganzheitliche Verwaltung des Lebenszyklus einer Software.",
-      "Umfasst: Anforderungen, Entwicklung, Test, Deployment, Wartung.",
-      "Integriert verschiedene Tools und Prozesse.",
-      "Verbessert Qualität und Effizienz der Softwareentwicklung."
-    ],
-    "sprechernotizen": "ALM betrachtet Software von der Idee bis zur Abschaltung. Tools wie Azure DevOps oder Jira unterstützen ALM-Prozesse, indem sie Anforderungen, Code, Tests und Releases miteinander verknüpfen.",
-    "kategorie": "Softwareentwicklung",
-    "id": 362
-  },
-  {
-    "titel": "Was ist ein CMS (Content Management System)?",
-    "hauptpunkte": [
-      "System zur Erstellung und Verwaltung von Inhalten (z.B. Webseiten).",
-      "Trennung von Inhalt und Design.",
-      "Keine Programmierkenntnisse für Redakteure nötig.",
-      "Beispiele: WordPress, Typo3, Drupal, Joomla."
-    ],
-    "sprechernotizen": "Ein CMS ermöglicht es auch Nicht-Technikern, Webseiten zu pflegen. Der Redakteur schreibt Texte und lädt Bilder hoch, das CMS kümmert sich um das Design und die Darstellung.",
-    "kategorie": "Softwareentwicklung",
-    "id": 363
-  },
-  {
-    "titel": "Was ist ein CRM (Customer Relationship Management System)?",
-    "hauptpunkte": [
-      "Software zur Pflege und Steuerung von Kundenbeziehungen.",
-      "Speichert Kundendaten, Kontakthistorie, Angebote.",
-      "Unterstützt Vertrieb, Marketing und Service.",
-      "Beispiele: Salesforce, SAP CRM, HubSpot."
-    ],
-    "sprechernotizen": "Ein CRM ist die zentrale Datenbank für alle Kundeninformationen. Der Vertrieb sieht auf einen Blick die Kontakthistorie, offene Angebote und geplante Aktivitäten.",
-    "kategorie": "Softwareentwicklung",
-    "id": 364
-  },
-  {
-    "titel": "Was ist ein DBMS (Datenbankmanagementsystem)?",
-    "hauptpunkte": [
-      "Software zur Speicherung, Verwaltung und Sicherung von Daten.",
-      "Ermöglicht strukturierte Abfragen (meist SQL).",
-      "Gewährleistet Datenkonsistenz und Mehrbenutzerbetrieb.",
-      "Beispiele: MySQL, PostgreSQL, Oracle, MS SQL Server."
-    ],
-    "sprechernotizen": "Ein DBMS ist die Schicht zwischen Anwendung und Daten. Es sorgt für sichere Speicherung, schnelle Abfragen und verhindert Dateninkonsistenzen durch Transaktionsmanagement.",
-    "kategorie": "Datenbanken",
-    "id": 365
-  },
-  {
-    "titel": "Was ist ein ERP-System (Enterprise Resource Planning)?",
-    "hauptpunkte": [
-      "Software zur Ressourcenplanung des gesamten Unternehmens.",
-      "Integriert: Produktion, Vertrieb, Einkauf, Finanzen, Personal.",
-      "Einheitliche Datenbasis für alle Unternehmensbereiche.",
-      "Beispiele: SAP, Microsoft Dynamics, Oracle ERP."
-    ],
-    "sprechernotizen": "Ein ERP-System ist das Rückgrat vieler Unternehmen. Alle Abteilungen arbeiten mit denselben Daten: Wenn der Vertrieb einen Auftrag eingibt, sieht die Produktion sofort den Bedarf.",
-    "kategorie": "Softwareentwicklung",
-    "id": 366
-  },
-  {
-    "titel": "Was ist eine IDE (Integrierte Entwicklungsumgebung)?",
-    "hauptpunkte": [
-      "Sammlung von Werkzeugen zur effizienten Softwareentwicklung.",
-      "Enthält: Editor, Compiler/Interpreter, Debugger.",
-      "Bietet Code-Vervollständigung und Syntaxhervorhebung.",
-      "Beispiele: Visual Studio, IntelliJ IDEA, Eclipse, VS Code."
-    ],
-    "sprechernotizen": "Eine IDE vereint alle Werkzeuge, die ein Entwickler braucht, in einem Programm. Man kann Code schreiben, kompilieren, testen und debuggen, ohne zwischen verschiedenen Tools zu wechseln.",
-    "kategorie": "Softwareentwicklung",
-    "id": 367
-  },
-  {
-    "titel": "Was ist UML (Unified Modeling Language)?",
-    "hauptpunkte": [
-      "Standardisierte grafische Modellierungssprache.",
-      "Dient der Visualisierung und Dokumentation von Software.",
-      "Verschiedene Diagrammtypen: Klassen-, Sequenz-, Use-Case-Diagramm.",
-      "Unabhängig von der Programmiersprache."
-    ],
-    "sprechernotizen": "UML ist die 'Zeichensprache' der Softwareentwicklung. Mit Klassendiagrammen zeigt man die Struktur, mit Sequenzdiagrammen den Ablauf. UML hilft bei der Planung und Dokumentation.",
-    "kategorie": "Softwareentwicklung",
-    "id": 368
-  },
-  {
-    "titel": "Was sind DDL und DML in SQL?",
-    "hauptpunkte": [
-      "DDL (Data Definition Language): Befehle zur Strukturdefinition.",
-      "DDL-Befehle: CREATE, ALTER, DROP, TRUNCATE.",
-      "DML (Data Manipulation Language): Befehle zur Datenbearbeitung.",
-      "DML-Befehle: SELECT, INSERT, UPDATE, DELETE."
-    ],
-    "sprechernotizen": "Mit DDL baut man das 'Haus' (die Tabellenstruktur): CREATE TABLE erstellt eine Tabelle. Mit DML 'zieht man ein': INSERT fügt Daten ein, SELECT liest sie aus, UPDATE ändert sie.",
-    "kategorie": "Datenbanken",
-    "id": 369
-  },
-  {
-    "titel": "Was ist AES (Advanced Encryption Standard)?",
-    "hauptpunkte": [
-      "Weltweit anerkannter Standard für symmetrische Verschlüsselung.",
-      "Schlüssellängen: 128, 192 oder 256 Bit.",
-      "Wird für WLAN (WPA2), Festplattenverschlüsselung, VPN genutzt.",
-      "Gilt als sicher und ist sehr performant."
-    ],
-    "sprechernotizen": "AES hat den älteren DES-Standard abgelöst. Mit einem 256-Bit-Schlüssel gilt AES als praktisch unknackbar. Er wird fast überall eingesetzt: WLAN, BitLocker, SSL/TLS.",
-    "kategorie": "IT-Sicherheit",
-    "id": 370
-  },
-  {
-    "titel": "Was ist die DSGVO (Datenschutz-Grundverordnung)?",
-    "hauptpunkte": [
-      "EU-weite Verordnung zum Schutz personenbezogener Daten.",
-      "Gilt seit 25. Mai 2018.",
-      "Rechte: Auskunft, Löschung, Datenportabilität.",
-      "Hohe Bußgelder bei Verstößen (bis 20 Mio. € oder 4% des Umsatzes)."
-    ],
-    "sprechernotizen": "Die DSGVO regelt, wie Unternehmen mit personenbezogenen Daten umgehen müssen. Betroffene haben weitreichende Rechte, Unternehmen umfangreiche Pflichten (Dokumentation, TOM, Datenschutzbeauftragter).",
-    "kategorie": "IT-Sicherheit",
-    "id": 371
-  },
-  {
-    "titel": "Was ist MFA (Multi-Factor-Authentication)?",
-    "hauptpunkte": [
-      "Authentifizierung durch mehrere unabhängige Faktoren.",
-      "Faktoren: Wissen (Passwort), Besitz (Smartphone), Biometrie (Fingerabdruck).",
-      "Erhöht die Sicherheit massiv.",
-      "Beispiele: SMS-Code, Authenticator-App, Hardware-Token."
-    ],
-    "sprechernotizen": "MFA schützt auch bei kompromittierten Passwörtern. Selbst wenn ein Angreifer das Passwort kennt, braucht er zusätzlich das Smartphone oder den Fingerabdruck. Für wichtige Systeme ist MFA Pflicht.",
-    "kategorie": "IT-Sicherheit",
-    "id": 372
-  },
-  {
-    "titel": "Was ist eine PKI (Public Key Infrastructure)?",
-    "hauptpunkte": [
-      "System zur Ausstellung und Verwaltung digitaler Zertifikate.",
-      "Basiert auf asymmetrischer Verschlüsselung (Public/Private Key).",
-      "Ermöglicht sichere Kommunikation und digitale Signaturen.",
-      "Komponenten: CA (Zertifizierungsstelle), RA, CRL."
-    ],
-    "sprechernotizen": "PKI ist die Basis für HTTPS und E-Mail-Verschlüsselung. Die Zertifizierungsstelle (CA) bürgt für die Echtheit eines Zertifikats. Der Browser vertraut der CA und damit dem Zertifikat.",
-    "kategorie": "IT-Sicherheit",
-    "id": 373
-  },
-  {
-    "titel": "Was ist SPI (Stateful Packet Inspection)?",
-    "hauptpunkte": [
-      "Firewall-Technik zur Prüfung von Datenpaketen.",
-      "Berücksichtigt den Verbindungszustand (Status der Verbindung).",
-      "Erkennt, ob ein Paket zu einer bestehenden Verbindung gehört.",
-      "Sicherer als einfache Paketfilter."
-    ],
-    "sprechernotizen": "SPI-Firewalls 'merken' sich, welche Verbindungen aufgebaut wurden. Ein eingehendes Paket wird nur akzeptiert, wenn es zu einer selbst initiierten Verbindung gehört. Das verhindert viele Angriffe.",
-    "kategorie": "IT-Sicherheit",
-    "id": 374
-  },
-  {
-    "titel": "Was sind TOM (Technisch-organisatorische Maßnahmen)?",
-    "hauptpunkte": [
-      "Maßnahmen zur Sicherheit der Datenverarbeitung gemäß DSGVO.",
-      "Technisch: Verschlüsselung, Zugriffskontrolle, Backups.",
-      "Organisatorisch: Schulungen, Richtlinien, Zuständigkeiten.",
-      "Müssen dokumentiert und regelmäßig überprüft werden."
-    ],
-    "sprechernotizen": "TOM sind Pflicht nach DSGVO. Sie umfassen alles, was die Sicherheit personenbezogener Daten gewährleistet: von der Passwortvorgabe über Zutrittskontrollen bis zur Mitarbeiterschulung.",
-    "kategorie": "IT-Sicherheit",
-    "id": 375
-  },
-  {
-    "titel": "Was ist ein Penetrationstest (Pentest)?",
-    "hauptpunkte": [
-      "Geplanter, autorisierter Sicherheitstest.",
-      "Prüfer agiert wie ein echter Angreifer.",
-      "Ziel: Schwachstellen praktisch nachweisen.",
-      "Ergebnis: Bericht mit Risiko-Bewertung und Empfehlungen."
-    ],
-    "sprechernotizen": "Ein Pentest simuliert einen echten Hackerangriff. Der Pentester versucht in das System einzudringen und dokumentiert, welche Lücken er findet. Am Ende gibt es konkrete Empfehlungen zur Behebung.",
-    "kategorie": "IT-Sicherheit",
-    "id": 376
-  },
-  {
-    "titel": "Erkläre die wichtigsten Netzwerk-Befehle: ping, tracert, nslookup",
-    "hauptpunkte": [
-      "ping: Prüft die Erreichbarkeit eines Geräts (ICMP Echo).",
-      "tracert/traceroute: Verfolgt den Weg der Pakete über Router.",
-      "nslookup: Fragt DNS ab, um IP zu einem Hostnamen zu ermitteln.",
-      "Alle drei sind wichtige Diagnose-Werkzeuge."
-    ],
-    "sprechernotizen": "Diese drei Befehle sind das Einmaleins der Netzwerk-Diagnose. Mit ping prüft man 'Ist das Ziel erreichbar?', mit tracert 'Welchen Weg nehmen die Pakete?', mit nslookup 'Welche IP hat dieser Name?'.",
-    "kategorie": "Netzwerktechnik",
-    "id": 377
-  },
-  {
-    "titel": "Erkläre die Befehle ipconfig, arp und netsh",
-    "hauptpunkte": [
-      "ipconfig /all: Zeigt detaillierte Netzwerkkonfiguration (Windows).",
-      "arp -a: Zeigt IP-zu-MAC-Adress-Zuordnungen im Cache.",
-      "netsh: Konfiguration von Netzwerk und Firewall über Konsole."
-    ],
-    "sprechernotizen": "ipconfig zeigt die eigene Netzwerkkonfiguration (IP, Gateway, DNS). arp zeigt, welche MAC-Adressen zu welchen IPs im lokalen Netz gehören. netsh ist das mächtige Tool zur Netzwerkkonfiguration.",
-    "kategorie": "Netzwerktechnik",
-    "id": 378
-  },
-  {
-    "titel": "Was macht der Befehl chmod unter Linux?",
-    "hauptpunkte": [
-      "Ändert die Dateizugriffsrechte unter Linux.",
-      "Rechte: r (read), w (write), x (execute).",
-      "Für: Benutzer (u), Gruppe (g), Andere (o).",
-      "Beispiel: chmod 755 datei.sh gibt rwx für Owner, rx für Gruppe/Andere."
-    ],
-    "sprechernotizen": "chmod steht für 'change mode'. Die Zahl 755 bedeutet: Owner hat alle Rechte (7=rwx), Gruppe und Andere dürfen lesen und ausführen (5=r-x). Wichtig für Skripte, die ausführbar sein sollen.",
-    "kategorie": "Netzwerktechnik",
-    "id": 379
   }
 ];
-
         // Load cards
         function loadCards() {
             cards = EMBEDDED_CARDS;
@@ -5978,13 +4916,13 @@
                 cardProg.mastery = Math.max(0, cardProg.mastery - 1);
                 cardProg.wrong++;
                 progress.wrongCount++;
-                xpGain = 5; // Still get some XP for trying
+                xpGain = 1; // Still get some XP for trying
             } else if (rating === 1) {
                 // Hard but correct
                 cardProg.mastery = Math.min(5, cardProg.mastery + 0.5);
                 cardProg.correct++;
                 progress.correctCount++;
-                xpGain = 10;
+                xpGain = 5;
             } else {
                 // Correct
                 cardProg.mastery = Math.min(5, cardProg.mastery + 1);
@@ -6152,7 +5090,7 @@
 
         // Reset Progress
         function resetProgress() {
-            if (confirm('Moechtest du wirklich deinen gesamten Fortschritt zuruecksetzen?')) {
+            if (confirm('Moechtest du wirklich deinen gesamten Fortschritt zurücksetzen?')) {
                 localStorage.removeItem('ap1_lernkarten_progress');
                 progress = {
                     xp: 0,
@@ -6168,12 +5106,191 @@
                 updateStats();
                 updateAchievements();
                 showCard();
-                showToast('Fortschritt zurueckgesetzt');
+                showToast('Fortschritt zurückgesetzt');
             }
         }
 
         // Initialize
         loadCards();
+
+        // =============================================
+        // GLOSSAR FUNKTIONEN
+        // =============================================
+
+        const GLOSSAR_DATA = [
+            // Allgemeine IT und Hardware
+            { term: "ALM", full: "Application Lifecycle Management", desc: "Die ganzheitliche Verwaltung des Lebenszyklus einer Softwareanwendung von der Planung bis zur Außerbetriebnahme.", category: "Hardware & IT" },
+            { term: "ATA (IDE)", full: "Advanced Technology Attachment", desc: "Ein Bus-System für den Anschluss von Datenspeichern wie Festplatten und optischen Laufwerken.", category: "Hardware & IT" },
+            { term: "BIOS", full: "Basic Input Output System", desc: "Das grundlegende Startprogramm eines PCs, das heute weitgehend durch UEFI ersetzt wurde.", category: "Hardware & IT" },
+            { term: "CPU", full: "Central Processing Unit", desc: "Der Hauptprozessor eines Computers, der alle Berechnungen und Befehle ausführt.", category: "Hardware & IT" },
+            { term: "HBA", full: "Host-Bus-Adapter", desc: "Schnittstellenkarte, die einen Computer mit Speicher- oder Netzwerksystemen (wie Fibre Channel) verbindet.", category: "Hardware & IT" },
+            { term: "HDD", full: "Hard Disk Drive", desc: "Herkömmliche, mechanische Festplatte mit rotierenden Scheiben.", category: "Hardware & IT" },
+            { term: "IuK", full: "Informations- und Kommunikationstechnik", desc: "Sammelbegriff für alle Technologien zur Verarbeitung und Übertragung von Informationen.", category: "Hardware & IT" },
+            { term: "M.2-SSD", full: "M.2 Solid State Drive", desc: "Ein kompakter Formfaktor für Solid-State-Drives, der direkt auf dem Mainboard montiert wird.", category: "Hardware & IT" },
+            { term: "NVMe", full: "Non-Volatile Memory express", desc: "Ein Protokoll, das speziell für moderne SSDs entwickelt wurde, um die volle Geschwindigkeit des PCI-Express-Busses zu nutzen.", category: "Hardware & IT" },
+            { term: "PDA", full: "Personal Digital Assistant", desc: "Tragbarer digitaler Assistent, Vorgänger moderner Smartphones.", category: "Hardware & IT" },
+            { term: "S.M.A.R.T.", full: "Self-Monitoring, Analysis and Reporting Technology", desc: "Ein Überwachungssystem für Festplatten und SSDs zur Früherkennung von Hardwaredefekten.", category: "Hardware & IT" },
+            { term: "SATA", full: "Serial AT Attachment", desc: "Eine weit verbreitete Schnittstelle für den Anschluss von Festplatten und SSDs.", category: "Hardware & IT" },
+            { term: "SCSI", full: "Small Computer System Interface", desc: "Bus-System für Datenspeicher, häufig in Servern verwendet.", category: "Hardware & IT" },
+            { term: "SSD", full: "Solid State Drive", desc: "Ein elektronisches Speichermedium ohne bewegliche Teile, das deutlich schneller als eine HDD ist.", category: "Hardware & IT" },
+            { term: "UEFI", full: "Unified Extensible Firmware Interface", desc: "Der moderne Nachfolger des BIOS, der unter anderem das Booten von großen Datenträgern und grafische Oberflächen unterstützt.", category: "Hardware & IT" },
+            { term: "UHD / 4K", full: "Ultra High Definition", desc: "Digitales Videoformat mit 3840 x 2160 Pixeln Auflösung.", category: "Hardware & IT" },
+            { term: "USV", full: "Unterbrechungsfreie Stromversorgung", desc: "Schützt IT-Komponenten vor Stromausfällen und Störungen im Netz (Klassen: VFI, VI, VFD).", category: "Hardware & IT" },
+
+            // Netzwerktechnik und Internet
+            { term: "APIPA", full: "Automatic Private IP Addressing", desc: "Ein Feature von Windows, das automatisch eine IP-Adresse aus dem Bereich 169.254.x.x vergibt, wenn kein DHCP-Server erreichbar ist.", category: "Netzwerk" },
+            { term: "ARP", full: "Address Resolution Protocol", desc: "Ermittelt die physische MAC-Adresse zu einer bekannten IP-Adresse im lokalen Netzwerk.", category: "Netzwerk" },
+            { term: "BGP", full: "Border Gateway Protocol", desc: "Routing-Protokoll für die Verbindung zwischen autonomen Systemen im Internet.", category: "Netzwerk" },
+            { term: "DHCP", full: "Dynamic Host Configuration Protocol", desc: "Ein Protokoll zur automatischen Zuweisung von IP-Adressen und weiteren Konfigurationsdaten an Geräte im Netzwerk.", category: "Netzwerk" },
+            { term: "DMZ", full: "Demilitarisierte Zone", desc: "Ein abgeschirmtes Subnetz, das durch Firewalls vom internen Netz getrennt ist und öffentlich erreichbare Dienste beherbergt.", category: "Netzwerk" },
+            { term: "DNS", full: "Domain Name System", desc: "Dient der Namensauflösung, indem es menschenlesbare Namen in IP-Adressen übersetzt.", category: "Netzwerk" },
+            { term: "DSL", full: "Digital Subscriber Line", desc: "Techniken zur Datenübertragung über Telefonleitungen (ADSL, VDSL, SDSL).", category: "Netzwerk" },
+            { term: "HTTP/HTTPS", full: "Hypertext Transfer Protocol (Secure)", desc: "Protokolle zur Übertragung von Webseiten; HTTPS nutzt SSL/TLS zur Verschlüsselung.", category: "Netzwerk" },
+            { term: "ICMP", full: "Internet Control Message Protocol", desc: "Wird für den Austausch von Status- und Fehlermeldungen im Netzwerk verwendet (z.B. ping).", category: "Netzwerk" },
+            { term: "IMAP/IMAPS", full: "Internet Message Access Protocol (Secure)", desc: "Ein Protokoll zum Abrufen von E-Mails, bei dem die Nachrichten auf dem Server verbleiben und synchronisiert werden.", category: "Netzwerk" },
+            { term: "IP", full: "Internet Protocol", desc: "Das grundlegende Protokoll für die Adressierung und das Routing von Datenpaketen (IPv4, IPv6).", category: "Netzwerk" },
+            { term: "iSCSI", full: "Internet Small Computer System Interface", desc: "Protokoll zur Übertragung von SCSI-Befehlen über IP-Netzwerke.", category: "Netzwerk" },
+            { term: "LAN", full: "Local Area Network", desc: "Ein lokales Netzwerk, das Geräte in einem begrenzten Bereich verbindet.", category: "Netzwerk" },
+            { term: "MIMO", full: "Multiple Input Multiple Output", desc: "Ein Verfahren in der drahtlosen Übertragung, das mehrere Sende- und Empfangsantennen parallel nutzt.", category: "Netzwerk" },
+            { term: "NAS", full: "Network Attached Storage", desc: "Netzgebundener Speicher, der über das Netzwerk für mehrere Benutzer zugänglich ist.", category: "Netzwerk" },
+            { term: "NIC", full: "Network Interface Card", desc: "Netzwerkkarte zur Anbindung eines Computers an ein Netzwerk.", category: "Netzwerk" },
+            { term: "NTP", full: "Network Time Protocol", desc: "Protokoll zur Synchronisation der Uhrzeiten von Computern über ein Netzwerk.", category: "Netzwerk" },
+            { term: "OSI", full: "Open Systems Interconnection", desc: "Referenzmodell für Netzwerkschichten mit 7 Ebenen.", category: "Netzwerk" },
+            { term: "PoE", full: "Power over Ethernet", desc: "Verfahren zur Stromversorgung von Netzwerkgeräten direkt über das Ethernet-Kabel.", category: "Netzwerk" },
+            { term: "POP3/POP3S", full: "Post Office Protocol 3 (Secure)", desc: "Ein Protokoll zum Abholen von E-Mails, bei dem diese vom Server heruntergeladen werden.", category: "Netzwerk" },
+            { term: "PPPoE", full: "Point-to-Point Protocol over Ethernet", desc: "Ein Protokoll zum Aufbau einer Netzwerkverbindung, häufig für DSL-Anschlüsse genutzt.", category: "Netzwerk" },
+            { term: "QoS", full: "Quality of Service", desc: "Techniken zur Priorisierung von Datenverkehr (z.B. VoIP), um die Qualität zu sichern.", category: "Netzwerk" },
+            { term: "RADIUS", full: "Remote Authentication Dial-In User Service", desc: "Server-Dienst zur zentralen Authentifizierung von Benutzern, häufig in WPA2-Enterprise.", category: "Netzwerk" },
+            { term: "SAN", full: "Storage Area Network", desc: "Dediziertes Hochgeschwindigkeitsnetzwerk für Speichergeräte.", category: "Netzwerk" },
+            { term: "SLAAC", full: "Stateless Address Autoconfiguration", desc: "IPv6-Mechanismus zur automatischen Adresskonfiguration ohne DHCP.", category: "Netzwerk" },
+            { term: "SMB/NFS", full: "Server Message Block / Network File System", desc: "Protokolle für den Dateizugriff über Netzwerke.", category: "Netzwerk" },
+            { term: "SMTP/SMTPS", full: "Simple Mail Transfer Protocol (Secure)", desc: "Das Standardprotokoll zum Versenden von E-Mails über das Internet.", category: "Netzwerk" },
+            { term: "SNMP", full: "Simple Network Management Protocol", desc: "Protokoll zur Überwachung und Steuerung von Netzwerkelementen.", category: "Netzwerk" },
+            { term: "SSID", full: "Service Set Identifier", desc: "Der frei wählbare Name eines Funknetzwerks (WLAN).", category: "Netzwerk" },
+            { term: "TCP", full: "Transmission Control Protocol", desc: "Ein verbindungsorientiertes, zuverlässiges Transportprotokoll mit Fehlerbehebung.", category: "Netzwerk" },
+            { term: "UDP", full: "User Datagram Protocol", desc: "Ein verbindungsloses, schnelles Transportprotokoll ohne Fehlerkontrolle.", category: "Netzwerk" },
+            { term: "VLAN", full: "Virtual Local Area Network", desc: "Ein logisches Teilnetz innerhalb eines physischen Netzwerks zur Segmentierung.", category: "Netzwerk" },
+            { term: "VPN", full: "Virtual Private Network", desc: "Ein logisches, privates Netzwerk, das eine verschlüsselte Verbindung über öffentliche Netze herstellt.", category: "Netzwerk" },
+            { term: "WLAN/WiFi", full: "Wireless Local Area Network", desc: "Drahtloses lokales Netzwerk nach IEEE 802.11 Standards.", category: "Netzwerk" },
+
+            // Software, Datenbanken und Entwicklung
+            { term: "1NF/2NF/3NF", full: "Erste, zweite und dritte Normalform", desc: "Regeln zur Strukturierung von Datenbanken zur Vermeidung von Redundanzen.", category: "Software & DB" },
+            { term: "CMS", full: "Content Management System", desc: "Ein System zur Erstellung und Verwaltung von Webinhalten (z.B. WordPress).", category: "Software & DB" },
+            { term: "CRM", full: "Customer Relationship Management", desc: "Software zur Pflege und Steuerung der Kundenbeziehungen.", category: "Software & DB" },
+            { term: "DCL", full: "Data Control Language", desc: "SQL-Befehle zur Rechteverwaltung (GRANT, REVOKE).", category: "Software & DB" },
+            { term: "DDL", full: "Data Definition Language", desc: "SQL-Befehle zur Definition der Datenstruktur (CREATE, ALTER, DROP).", category: "Software & DB" },
+            { term: "DML", full: "Data Manipulation Language", desc: "SQL-Befehle zur Bearbeitung von Daten (INSERT, UPDATE, DELETE).", category: "Software & DB" },
+            { term: "DQL", full: "Data Query Language", desc: "SQL-Befehle zur Abfrage von Daten (SELECT).", category: "Software & DB" },
+            { term: "DBMS", full: "Datenbankmanagementsystem", desc: "Software zur Speicherung, Verwaltung und Sicherung von Datenbeständen.", category: "Software & DB" },
+            { term: "ER-Modell", full: "Entity-Relationship-Modell", desc: "Grafische Darstellung von Datenbank-Entitäten und deren Beziehungen.", category: "Software & DB" },
+            { term: "ERP", full: "Enterprise Resource Planning", desc: "Software zur Unterstützung der Ressourcenplanung des gesamten Unternehmens.", category: "Software & DB" },
+            { term: "IDE", full: "Integrierte Entwicklungsumgebung", desc: "Eine Sammlung von Werkzeugen (Editor, Compiler, Debugger) zur Softwareentwicklung.", category: "Software & DB" },
+            { term: "SQL", full: "Structured Query Language", desc: "Die Standard-Sprache für die Arbeit mit relationalen Datenbanken.", category: "Software & DB" },
+            { term: "UML", full: "Unified Modeling Language", desc: "Eine standardisierte Modellierungssprache zur Visualisierung von Software-Systemen.", category: "Software & DB" },
+            { term: "VDI", full: "Virtuelle Desktop-Infrastruktur", desc: "Bereitstellung von Desktop-Umgebungen auf zentralen Servern.", category: "Software & DB" },
+
+            // IT-Sicherheit und Datenschutz
+            { term: "AES", full: "Advanced Encryption Standard", desc: "Ein weltweit anerkannter Standard für die symmetrische Verschlüsselung von Daten.", category: "IT-Sicherheit" },
+            { term: "CA", full: "Certification Authority", desc: "Zertifizierungsstelle, die digitale Zertifikate ausstellt.", category: "IT-Sicherheit" },
+            { term: "CRL", full: "Certificate Revocation List", desc: "Liste der zurückgerufenen/gesperrten Zertifikate.", category: "IT-Sicherheit" },
+            { term: "DSGVO", full: "Datenschutz-Grundverordnung", desc: "Die EU-weite Verordnung zum Schutz personenbezogener Daten.", category: "IT-Sicherheit" },
+            { term: "ELAM", full: "Early Launch Antimalware", desc: "Windows-Funktion zum Schutz vor Malware beim Systemstart.", category: "IT-Sicherheit" },
+            { term: "ISMS", full: "Informationssicherheits-Managementsystem", desc: "Systematischer Ansatz zur Verwaltung sensibler Unternehmensinformationen.", category: "IT-Sicherheit" },
+            { term: "KRITIS", full: "Kritische Infrastrukturen", desc: "Organisationen mit wichtiger Bedeutung für das Gemeinwesen (Energie, Gesundheit, etc.).", category: "IT-Sicherheit" },
+            { term: "MFA", full: "Multi-Factor-Authentication", desc: "Ein Verfahren, bei dem mehrere unabhängige Faktoren zur Identifizierung angegeben werden müssen.", category: "IT-Sicherheit" },
+            { term: "PKI", full: "Public Key Infrastructure", desc: "Ein System zur Ausstellung und Verwaltung digitaler Zertifikate.", category: "IT-Sicherheit" },
+            { term: "RSA/ECC/DSA", full: "Verschlüsselungsalgorithmen", desc: "Asymmetrische Verschlüsselungsverfahren für sichere Kommunikation.", category: "IT-Sicherheit" },
+            { term: "SPI", full: "Stateful Packet Inspection", desc: "Eine Firewall-Technik, die Datenpakete basierend auf ihrem Verbindungszustand prüft.", category: "IT-Sicherheit" },
+            { term: "SSL/TLS", full: "Secure Sockets Layer / Transport Layer Security", desc: "Protokolle zur Verschlüsselung von Internetverbindungen.", category: "IT-Sicherheit" },
+            { term: "TOM", full: "Technisch-organisatorische Maßnahmen", desc: "Maßnahmen gemäß DSGVO zur Sicherheit der Datenverarbeitung.", category: "IT-Sicherheit" },
+            { term: "TPM", full: "Trusted Platform Module", desc: "Hardware-Chip zur sicheren Speicherung von Kryptografie-Schlüsseln.", category: "IT-Sicherheit" },
+            { term: "WPA/WPA2/WPA3", full: "Wireless Protected Access", desc: "Sicherheitsstandards für WLAN-Verschlüsselung.", category: "IT-Sicherheit" },
+            { term: "Pentest", full: "Penetrationstest", desc: "Geplanter, autorisierter Sicherheitstest, bei dem ein System wie ein echter Angreifer überprüft wird, um Schwachstellen aufzudecken.", category: "IT-Sicherheit" },
+
+            // Wirtschaft, Recht und Management
+            { term: "BBiG", full: "Berufsbildungsgesetz", desc: "Gesetz, das die Berufsausbildung in Deutschland regelt.", category: "Wirtschaft & Recht" },
+            { term: "BGB", full: "Bürgerliches Gesetzbuch", desc: "Grundlegendes Gesetz für das Privatrecht in Deutschland.", category: "Wirtschaft & Recht" },
+            { term: "EULA", full: "End User License Agreement", desc: "Endbenutzer-Lizenzvereinbarung für Software.", category: "Wirtschaft & Recht" },
+            { term: "HGB", full: "Handelsgesetzbuch", desc: "Gesetz für das Handelsrecht in Deutschland.", category: "Wirtschaft & Recht" },
+            { term: "i.A./i.V./ppa.", full: "Im Auftrag / In Vollmacht / per procura", desc: "Unterschriftvollmachten mit verschiedenen Befugnisstufen.", category: "Wirtschaft & Recht" },
+            { term: "KMU", full: "Kleine und mittlere Unternehmen", desc: "Unternehmen mit weniger als 250 Mitarbeitern.", category: "Wirtschaft & Recht" },
+            { term: "OEM", full: "Original Equipment Manufacturer", desc: "Hersteller, der Produkte für andere Marken produziert.", category: "Wirtschaft & Recht" },
+            { term: "PDCA", full: "Plan, Do, Check, Act", desc: "Qualitätsmanagement-Zyklus zur kontinuierlichen Verbesserung.", category: "Wirtschaft & Recht" },
+            { term: "SLA", full: "Service Level Agreement", desc: "Vertragliche Vereinbarung über die Qualität einer Dienstleistung.", category: "Wirtschaft & Recht" },
+            { term: "SMART", full: "Spezifisch, Messbar, Attraktiv, Realistisch, Terminiert", desc: "Kriterien für gute Zielformulierung im Projektmanagement.", category: "Wirtschaft & Recht" },
+            { term: "WEEE", full: "Waste Electrical and Electronic Equipment", desc: "EU-Richtlinie zur Entsorgung von Elektroaltgeräten.", category: "Wirtschaft & Recht" },
+
+            // Kommandozeilen-Werkzeuge
+            { term: "arp -a", full: "ARP Cache anzeigen", desc: "Zeigt die IP-zu-MAC-Adress-Zuordnungen im lokalen ARP-Cache an.", category: "CLI-Tools" },
+            { term: "chmod", full: "Change Mode", desc: "Linux-Werkzeug zum Ändern der Dateizugriffsrechte (r=read, w=write, x=execute).", category: "CLI-Tools" },
+            { term: "getmac -v", full: "Get MAC Address", desc: "Liest die MAC-Adressen aller Netzwerkadapter eines Windows-Systems aus.", category: "CLI-Tools" },
+            { term: "ipconfig /all", full: "IP Configuration", desc: "Zeigt die detaillierte Netzwerkkonfiguration unter Windows an.", category: "CLI-Tools" },
+            { term: "netsh", full: "Network Shell", desc: "Windows-Tool zur Konfiguration von Netzwerkadaptern und Firewall-Regeln.", category: "CLI-Tools" },
+            { term: "nslookup", full: "Name Server Lookup", desc: "Werkzeug zur Abfrage des DNS, um die IP-Adresse zu einem Hostnamen zu ermitteln.", category: "CLI-Tools" },
+            { term: "ping", full: "Packet Internet Groper", desc: "Prüft die Erreichbarkeit eines Netzwerkgeräts durch Echo-Anfragen (ICMP).", category: "CLI-Tools" },
+            { term: "tracert", full: "Trace Route", desc: "Verfolgt den Weg von Datenpaketen über verschiedene Router zum Ziel.", category: "CLI-Tools" }
+        ];
+
+        let glossarFiltered = [...GLOSSAR_DATA];
+        let glossarIndex = 0;
+        let glossarCategory = 'alle';
+
+        function initGlossar() {
+            initGlossarCategories();
+            filterGlossar();
+        }
+
+        function initGlossarCategories() {
+            const categories = ['alle', ...new Set(GLOSSAR_DATA.map(g => g.category))];
+            const select = document.getElementById('glossarCategorySelect');
+            select.innerHTML = categories.map(cat => 
+                `<option value="${cat}" ${cat === glossarCategory ? 'selected' : ''}>${cat === 'alle' ? 'Alle Kategorien' : cat}</option>`
+            ).join('');
+        }
+
+        function setGlossarCategory(cat) {
+            glossarCategory = cat;
+            glossarIndex = 0;
+            filterGlossar();
+        }
+
+        function filterGlossar() {
+            glossarFiltered = GLOSSAR_DATA.filter(g => {
+                return glossarCategory === 'alle' || g.category === glossarCategory;
+            });
+            glossarIndex = 0;
+            showGlossarTerm();
+        }
+
+        function showGlossarTerm() {
+            if (glossarFiltered.length === 0) {
+                document.getElementById('glossarTerm').textContent = '—';
+                document.getElementById('glossarFull').textContent = 'Kein Begriff gefunden';
+                document.getElementById('glossarDesc').textContent = 'Versuche eine andere Suche oder Kategorie.';
+                document.getElementById('glossarCounter').textContent = '0 / 0';
+                return;
+            }
+            const term = glossarFiltered[glossarIndex];
+            document.getElementById('glossarTerm').textContent = term.term;
+            document.getElementById('glossarFull').textContent = term.full;
+            document.getElementById('glossarDesc').textContent = term.desc;
+            document.getElementById('glossarCounter').textContent = `${glossarIndex + 1} / ${glossarFiltered.length}`;
+        }
+
+        function nextGlossarTerm() {
+            if (glossarFiltered.length === 0) return;
+            glossarIndex = (glossarIndex + 1) % glossarFiltered.length;
+            showGlossarTerm();
+        }
+
+        function prevGlossarTerm() {
+            if (glossarFiltered.length === 0) return;
+            glossarIndex = (glossarIndex - 1 + glossarFiltered.length) % glossarFiltered.length;
+            showGlossarTerm();
+        }
+
+        // Initialisiere Glossar beim Laden
+        initGlossar();
     </script>
 </body>
 </html>
