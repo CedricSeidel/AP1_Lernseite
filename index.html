@@ -94,9 +94,10 @@
 
         /* Main Grid Layout */
         .main-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          align-items: stretch;
         }
 
         /* Level Section - Full Width */
@@ -104,13 +105,13 @@
             width: 100%;
         }
 
-        /* Card Focus Area - matches stats-bar grid */
+        /* Card Focus Area */
         .card-focus-area {
             display: grid;
-          grid-template-columns: minmax(0, 3fr) minmax(340px, 1fr);
-            gap: 16px;
-            align-items: stretch;
-            grid-auto-rows: clamp(540px, 68vh, 820px);
+            grid-template-columns: 1fr;
+            gap: 20px;
+          align-items: stretch;
+          grid-auto-rows: minmax(520px, 1fr);
         }
 
         .card-main {
@@ -118,29 +119,19 @@
           height: 100%;
           max-height: 100%;
           overflow: hidden;
-          gap: 16px;
+          gap: 20px;
           display: flex;
           flex-direction: column;
-          grid-column: 1;
-        }
-
-        .categories-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            grid-column: 2;
-          min-height: 500px;
-          min-width: 340px;
-          max-height: 100%;
-          overflow-y: auto;
+          align-items: stretch;
         }
 
         /* Controls with Mode Buttons */
         .controls-row {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 16px;
-            align-items: start;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          align-items: flex-start;
+          margin-top: 12px;
         }
 
         .controls-left {
@@ -180,7 +171,7 @@
         .bottom-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 16px;
           align-items: stretch;
         }
 
@@ -430,6 +421,8 @@
           overflow: hidden;
           display: flex;
           flex-direction: column;
+          align-self: stretch;
+          width: 100%;
         }
 
         .flashcard {
@@ -437,9 +430,8 @@
             border: 1px solid var(--border);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
             padding: 32px;
-          flex: 1;
           min-height: 0;
-          height: 100%;
+          height: clamp(400px, 50vh, 600px);
           overflow: hidden;
             position: relative;
             display: flex;
@@ -447,13 +439,67 @@
         }
 
         .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          margin-bottom: 24px;
+          padding-bottom: 24px;
+          border-bottom: 1px solid var(--border);
+          flex-shrink: 0;
+          flex-wrap: wrap;
+        }
+
+        .card-header-right {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-left: auto;
+          align-items: flex-end;
+        }
+
+        .card-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          width: min(300px, 100%);
+        }
+
+        .dropdown-group {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .dropdown-label {
+          font-size: 0.75rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--text-tertiary);
+          font-weight: 700;
+        }
+
+        .dropdown-select {
+          padding: 14px 16px;
+          border: 1px solid var(--border);
+          background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+          font-family: inherit;
+          font-size: 0.9rem;
+          color: var(--text-primary);
+          border-radius: 0;
+          cursor: pointer;
+          letter-spacing: -0.01em;
+          transition: border-color 0.15s ease, box-shadow 0.15s ease;
+          box-shadow: inset 0 1px 0 rgba(0,0,0,0.04);
+        }
+
+        .dropdown-select:focus {
+          outline: none;
+          border-color: var(--accent);
+          box-shadow: 0 0 0 2px rgba(255, 194, 40, 0.25);
+        }
+
+        .dropdown-select:hover {
+          border-color: var(--accent);
         }
 
         .card-content {
@@ -561,6 +607,10 @@
             background: var(--accent);
         }
 
+        .hidden {
+          display: none !important;
+        }
+
         .notes-section {
             background: var(--bg-secondary);
             padding: 24px;
@@ -585,15 +635,16 @@
 
         /* Control Buttons */
         .controls-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          align-items: stretch;
+          margin-top: 12px;
         }
 
         .controls {
             display: flex;
-            gap: 12px;
-            flex: 1;
+            gap: 16px;
         }
 
         .control-btn {
@@ -609,6 +660,7 @@
             gap: 10px;
             flex: 1;
             min-width: 120px;
+            min-height: 64px;
         }
 
         .btn-show {
@@ -638,13 +690,26 @@
         }
 
         .rating-buttons {
-            display: none;
-            gap: 12px;
-            flex: 1;
+          display: none;
+          gap: 16px;
         }
 
         .rating-buttons.visible {
-            display: flex;
+          display: flex;
+        }
+
+        .controls-row .control-btn {
+          min-width: 0;
+          height: 100%;
+        }
+
+        /* When only answer button is shown, span full width */
+        #showControls:not(.has-skip) {
+          grid-column: span 2;
+        }
+
+        #showControls.has-skip {
+          grid-column: span 1;
         }
 
         #showControls {
@@ -679,31 +744,6 @@
         .mode-btn-inline.active {
             background: var(--accent);
             border-color: var(--accent);
-        }
-
-        /* Shortcuts Bar */
-        .shortcuts-bar {
-            display: flex;
-            gap: 24px;
-            margin-top: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .shortcut-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-        }
-
-        .shortcuts-bar .key {
-            background: var(--bg-tertiary);
-            padding: 4px 8px;
-            font-size: 0.6875rem;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
         }
 
         /* Sidebar Sections */
@@ -961,34 +1001,10 @@
             cursor: pointer;
         }
 
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .card-focus-area {
-            grid-template-columns: minmax(0, 1.8fr) minmax(320px, 1fr);
-            }
-
-            .bottom-section {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .sidebar-right {
-                display: none;
-            }
-
-            .sidebar .achievements-section-mobile {
-                display: block;
-            }
-        }
 
         @media (max-width: 1024px) {
             .card-focus-area {
                 grid-template-columns: 1fr;
-                grid-auto-rows: clamp(520px, 82vh, 900px);
-            }
-
-            .card-main,
-            .categories-sidebar {
-                grid-column: auto;
             }
 
           .card-main {
@@ -1000,6 +1016,7 @@
           .card-container {
             min-height: 0;
             height: 100%;
+            width: 100%;
           }
 
             .categories-sidebar {
@@ -1015,11 +1032,16 @@
             }
 
             .controls-row {
-                flex-wrap: wrap;
+                grid-template-columns: 1fr;
             }
 
             .controls {
                 width: 100%;
+            }
+
+            #showControls:not(.has-skip),
+            #showControls.has-skip {
+              grid-column: span 1;
             }
 
             .mode-buttons-inline {
@@ -1030,6 +1052,24 @@
             .mode-btn-inline {
                 flex: 1;
                 min-width: 80px;
+            }
+
+            .card-header {
+              flex-direction: column;
+              align-items: flex-start;
+            }
+
+            .card-header-right {
+              width: 100%;
+              align-items: flex-start;
+            }
+
+            .card-actions {
+              width: 100%;
+            }
+
+            .dropdown-select {
+              width: 100%;
             }
 
             .bottom-section {
@@ -1047,71 +1087,6 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 24px 20px;
-            }
-
-          .card-container {
-            min-height: 0;
-            height: auto;
-          }
-
-            .stats-bar {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .mode-section {
-                grid-template-columns: 1fr;
-            }
-
-            .filter-buttons.vertical {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .categories-sidebar {
-              display: grid;
-              grid-template-columns: 1fr;
-              gap: 12px;
-              width: 100%;
-              min-height: auto;
-            }
-
-            .flashcard {
-                padding: 28px;
-            }
-
-            .card-main {
-              min-height: clamp(500px, 88vh, 860px);
-              max-height: 100%;
-              overflow: hidden;
-            }
-
-            .card-question {
-              font-size: 1.25rem;
-            }
-
-            .controls {
-                grid-template-columns: 1fr;
-            }
-
-            .btn-show {
-                grid-column: span 1;
-            }
-
-            .rating-buttons {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                grid-template-columns: 1fr;
-            }
-
-            .bottom-section {
-                gap: 16px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1178,19 +1153,37 @@
                     <!-- Card Container -->
                     <div class="card-container" id="cardContainer">
                         <div class="flashcard" id="flashcard">
-                            <div class="card-header">
-                                <div class="card-meta">
-                                    <span class="card-category" id="cardCategory">Kategorie</span>
-                                    <span class="card-number" id="cardNumber">1 / 100</span>
-                                </div>
-                                <div class="card-mastery" id="cardMastery">
-                                    <div class="mastery-dot"></div>
-                                    <div class="mastery-dot"></div>
-                                    <div class="mastery-dot"></div>
-                                    <div class="mastery-dot"></div>
-                                    <div class="mastery-dot"></div>
-                                </div>
+                          <div class="card-header">
+                            <div class="card-meta">
+                              <span class="card-category" id="cardCategory">Kategorie</span>
+                              <span class="card-number" id="cardNumber">1 / 100</span>
                             </div>
+                            <div class="card-header-right">
+                              <div class="card-mastery" id="cardMastery">
+                                <div class="mastery-dot"></div>
+                                <div class="mastery-dot"></div>
+                                <div class="mastery-dot"></div>
+                                <div class="mastery-dot"></div>
+                                <div class="mastery-dot"></div>
+                              </div>
+                              <div class="card-actions">
+                                <div class="dropdown-group">
+                                  <label for="modeSelect" class="dropdown-label">Lernmodus</label>
+                                  <select id="modeSelect" class="dropdown-select" onchange="setMode(this.value)">
+                                    <option value="learn">Lernen</option>
+                                    <option value="quiz">Abfrage</option>
+                                    <option value="weak">Schwaechen</option>
+                                  </select>
+                                </div>
+                                <div class="dropdown-group">
+                                  <label for="categorySelect" class="dropdown-label">Kategorien</label>
+                                  <select id="categorySelect" class="dropdown-select" onchange="setCategoryFilter(this.value)">
+                                    <option value="alle">Alle Kategorien</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                             
                             <!-- Scrollable Content Area -->
                             <div class="card-content">
@@ -1217,61 +1210,30 @@
                     <div class="controls-row">
                         <!-- Show/Skip Controls -->
                         <div class="controls" id="showControls">
-                            <button class="control-btn btn-show" onclick="showAnswer()">
-                                Antwort zeigen
-                            </button>
-                            <button class="control-btn btn-skip" onclick="skipCard()">
-                                Ueberspringen
-                            </button>
+                          <button class="control-btn btn-show" id="answerButton" onclick="showAnswer()">
+                            Antwort zeigen
+                          </button>
+                          <button class="control-btn btn-skip hidden" id="skipButton" onclick="skipCard()">
+                            Ueberspringen
+                          </button>
                         </div>
 
                         <!-- Rating Controls (hidden initially) -->
                         <div class="controls rating-buttons" id="ratingControls">
-                            <button class="control-btn btn-wrong" onclick="rateCard(0)">
-                                Falsch
-                            </button>
-                            <button class="control-btn btn-hard" onclick="rateCard(1)">
-                                Schwer
-                            </button>
-                            <button class="control-btn btn-correct" onclick="rateCard(2)">
-                                Richtig
-                            </button>
+                          <button class="control-btn btn-wrong" onclick="rateCard(0)">
+                            Falsch beantwortet
+                          </button>
+                          <button class="control-btn btn-hard" onclick="rateCard(1)">
+                            Schwere Frage
+                          </button>
+                          <button class="control-btn btn-correct" onclick="rateCard(2)">
+                            Richtig beantwortet
+                          </button>
                         </div>
 
-                        <!-- Mode Buttons -->
-                        <div class="mode-buttons-inline">
-                            <button class="mode-btn-inline active" data-mode="learn" onclick="setMode('learn')">
-                                Lernen
-                            </button>
-                            <button class="mode-btn-inline" data-mode="quiz" onclick="setMode('quiz')">
-                                Abfrage
-                            </button>
-                            <button class="mode-btn-inline" data-mode="weak" onclick="setMode('weak')">
-                                Schwaechen
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Keyboard Shortcuts -->
-                    <div class="shortcuts-bar">
-                        <span class="shortcut-item"><span class="key">Space</span> Antwort</span>
-                        <span class="shortcut-item"><span class="key">1</span> Falsch</span>
-                        <span class="shortcut-item"><span class="key">2</span> Schwer</span>
-                        <span class="shortcut-item"><span class="key">3</span> Richtig</span>
-                        <span class="shortcut-item"><span class="key">→</span> Skip</span>
                     </div>
                 </div>
 
-                <!-- Categories Sidebar - Right of Cards -->
-                <div class="categories-sidebar">
-                    <!-- Filter Section -->
-                    <div class="filter-section in-sidebar">
-                        <div class="section-label">Kategorien</div>
-                        <div class="filter-buttons vertical" id="filterButtons">
-                            <!-- Dynamisch befuellt -->
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Bottom Section - Stats and Achievements -->
@@ -5840,20 +5802,33 @@
         function updateFilters() {
             const categories = [...new Set(cards.map(c => c.kategorie))];
             const container = document.getElementById('filterButtons');
+            const categorySelect = document.getElementById('categorySelect');
             
-            // "Alle" Button
-            let html = `<button class="filter-btn active" data-filter="alle" onclick="toggleFilter('alle')">
+            if (container) {
+              // "Alle" Button
+              let html = `<button class="filter-btn active" data-filter="alle" onclick="toggleFilter('alle')">
                 Alle <span class="count">${cards.length}</span>
-            </button>`;
+              </button>`;
 
-            categories.forEach(cat => {
+              categories.forEach(cat => {
                 const count = cards.filter(c => c.kategorie === cat).length;
                 html += `<button class="filter-btn" data-filter="${cat}" onclick="toggleFilter('${cat}')">
-                    ${cat} <span class="count">${count}</span>
+                  ${cat} <span class="count">${count}</span>
                 </button>`;
-            });
+              });
 
-            container.innerHTML = html;
+              container.innerHTML = html;
+            }
+
+          if (categorySelect) {
+            let options = `<option value="alle">Alle (${cards.length})</option>`;
+            categories.forEach(cat => {
+              const count = cards.filter(c => c.kategorie === cat).length;
+              options += `<option value="${cat}">${cat} (${count})</option>`;
+            });
+            categorySelect.innerHTML = options;
+            syncCategorySelect();
+          }
         }
 
         function toggleFilter(filter) {
@@ -5879,10 +5854,43 @@
                 btn.classList.toggle('active', activeFilters.has(f));
             });
 
+            syncCategorySelect();
+
             applyFilters();
             currentIndex = 0;
             showCard();
         }
+
+          function setCategoryFilter(filter) {
+            activeFilters.clear();
+            if (filter === 'alle') {
+              activeFilters.add('alle');
+            } else {
+              activeFilters.add(filter);
+            }
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+              const f = btn.dataset.filter;
+              btn.classList.toggle('active', activeFilters.has(f));
+            });
+
+            applyFilters();
+            currentIndex = 0;
+            showCard();
+          }
+
+          function syncCategorySelect() {
+            const select = document.getElementById('categorySelect');
+            if (!select) return;
+
+            let value = 'alle';
+            if (activeFilters.size === 1 && !activeFilters.has('alle')) {
+              value = [...activeFilters][0];
+            }
+
+            const hasOption = Array.from(select.options).some(opt => opt.value === value);
+            select.value = hasOption ? value : 'alle';
+          }
 
         function applyFilters() {
             if (activeFilters.has('alle')) {
@@ -5915,13 +5923,17 @@
 
         // Mode
         function setMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.mode-btn, .mode-btn-inline').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.mode === mode);
-            });
-            applyFilters();
-            currentIndex = 0;
-            showCard();
+          currentMode = mode;
+          const modeSelect = document.getElementById('modeSelect');
+          if (modeSelect && modeSelect.value !== mode) {
+            modeSelect.value = mode;
+          }
+          document.querySelectorAll('.mode-btn, .mode-btn-inline').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.mode === mode);
+          });
+          applyFilters();
+          currentIndex = 0;
+          showCard();
         }
 
         // Display Card
@@ -5953,7 +5965,10 @@
             answerShown = false;
             document.getElementById('cardAnswer').classList.remove('visible');
             document.getElementById('showControls').style.display = 'flex';
+            document.getElementById('showControls').classList.remove('has-skip');
             document.getElementById('ratingControls').classList.remove('visible');
+            document.getElementById('skipButton').classList.add('hidden');
+            document.getElementById('answerButton').classList.remove('hidden');
         }
 
         function showEmptyState() {
@@ -5967,8 +5982,10 @@
         function showAnswer() {
             answerShown = true;
             document.getElementById('cardAnswer').classList.add('visible');
-            document.getElementById('showControls').style.display = 'none';
-            document.getElementById('ratingControls').classList.add('visible');
+          document.getElementById('ratingControls').classList.add('visible');
+          document.getElementById('skipButton').classList.remove('hidden');
+          document.getElementById('answerButton').classList.add('hidden');
+          document.getElementById('showControls').classList.add('has-skip');
         }
 
         function skipCard() {
@@ -6186,24 +6203,6 @@
                 showToast('Fortschritt zurueckgesetzt');
             }
         }
-
-        // Keyboard Shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (filteredCards.length === 0) return;
-
-            if (e.code === 'Space' && !answerShown) {
-                e.preventDefault();
-                showAnswer();
-            } else if (e.key === '1' && answerShown) {
-                rateCard(0);
-            } else if (e.key === '2' && answerShown) {
-                rateCard(1);
-            } else if (e.key === '3' && answerShown) {
-                rateCard(2);
-            } else if (e.key === 'ArrowRight') {
-                skipCard();
-            }
-        });
 
         // Initialize
         loadCards();
