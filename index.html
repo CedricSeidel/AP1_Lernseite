@@ -96,7 +96,7 @@
         .main-grid {
           display: flex;
           flex-direction: column;
-          gap: 24px;
+          gap: 16px;
           align-items: stretch;
         }
 
@@ -109,7 +109,7 @@
         .card-focus-area {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 16px;
           align-items: stretch;
           grid-auto-rows: minmax(520px, 1fr);
         }
@@ -119,52 +119,10 @@
           height: 100%;
           max-height: 100%;
           overflow: hidden;
-          gap: 20px;
+          gap: 16px;
           display: flex;
           flex-direction: column;
           align-items: stretch;
-        }
-
-        /* Controls with Mode Buttons */
-        .controls-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 16px;
-          align-items: flex-start;
-          margin-top: 12px;
-        }
-
-        .controls-left {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .mode-buttons-row {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mode-btn-inline {
-            padding: 18px 28px;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            font-size: 0.9375rem;
-            font-weight: 600;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            min-width: 140px;
-        }
-
-        .mode-btn-inline.active {
-            background: var(--accent);
-            border-color: var(--accent);
         }
 
         /* Bottom Section - Everything else */
@@ -175,21 +133,17 @@
           align-items: stretch;
         }
 
-        .main-content {
-            min-width: 0;
-        }
-
         .sidebar {
             display: flex;
             flex-direction: column;
-          gap: 20px;
+          gap: 16px;
           min-height: 0;
         }
 
         .sidebar-right {
             display: flex;
             flex-direction: column;
-          gap: 20px;
+          gap: 16px;
           min-height: 0;
         }
 
@@ -198,7 +152,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
-            margin-bottom: 32px;
+            margin-bottom: 16px;
         }
 
         .stat-card {
@@ -299,21 +253,6 @@
             font-weight: 700;
         }
 
-        /* Filter Section */
-        .filter-section {
-            margin-bottom: 0;
-        }
-
-        .filter-section.in-sidebar {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 24px;
-        }
-
-        .filter-section.in-sidebar .section-label {
-            margin-bottom: 16px;
-        }
-
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -359,24 +298,6 @@
             color: var(--text-primary);
         }
 
-        /* Mode Buttons */
-        .mode-section {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 32px;
-        }
-
-        .mode-buttons-vertical {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .mode-buttons-vertical .mode-btn {
-            width: 100%;
-        }
-
         .mode-btn {
             padding: 16px 20px;
             border: 1px solid var(--border);
@@ -414,7 +335,7 @@
 
         /* Card Display */
         .card-container {
-          margin-bottom: 24px;
+          margin-bottom: 0;
           flex: 1;
           min-height: 0;
           max-height: 100%;
@@ -639,7 +560,7 @@
           grid-template-columns: 1fr 1fr;
           gap: 16px;
           align-items: stretch;
-          margin-top: 12px;
+          margin-top: 0px;
         }
 
         .controls {
@@ -660,7 +581,7 @@
             gap: 10px;
             flex: 1;
             min-width: 120px;
-            min-height: 64px;
+            min-height: 70px;
         }
 
         .btn-show {
@@ -692,6 +613,7 @@
         .rating-buttons {
           display: none;
           gap: 16px;
+          align-items: stretch;
         }
 
         .rating-buttons.visible {
@@ -700,7 +622,12 @@
 
         .controls-row .control-btn {
           min-width: 0;
-          height: 100%;
+          align-self: stretch;
+        }
+
+        #showControls {
+          display: flex;
+          align-items: stretch;
         }
 
         /* When only answer button is shown, span full width */
@@ -712,38 +639,8 @@
           grid-column: span 1;
         }
 
-        #showControls {
-            display: flex;
-        }
-
         #showControls.hidden {
             display: none;
-        }
-
-        /* Mode Buttons in same row */
-        .mode-buttons-inline {
-            display: flex;
-            gap: 12px;
-        }
-
-        .mode-btn-inline {
-            padding: 16px 24px;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 600;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            min-width: 100px;
-        }
-
-        .mode-btn-inline.active {
-            background: var(--accent);
-            border-color: var(--accent);
         }
 
         /* Sidebar Sections */
@@ -1019,18 +916,6 @@
             width: 100%;
           }
 
-            .categories-sidebar {
-                order: 2;
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 16px;
-                width: 100%;
-                min-height: auto;
-                min-width: 0;
-              max-height: none;
-              overflow: visible;
-            }
-
             .controls-row {
                 grid-template-columns: 1fr;
             }
@@ -1042,16 +927,6 @@
             #showControls:not(.has-skip),
             #showControls.has-skip {
               grid-column: span 1;
-            }
-
-            .mode-buttons-inline {
-                width: 100%;
-                justify-content: stretch;
-            }
-
-            .mode-btn-inline {
-                flex: 1;
-                min-width: 80px;
             }
 
             .card-header {
