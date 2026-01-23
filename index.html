@@ -588,7 +588,7 @@
         }
         .control-btn:hover {
             border-color: var(--accent);
-            background: var(--bg-tertiary);
+            opacity: 1;
         }
 
 
@@ -656,9 +656,9 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             padding: 24px;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar-title {
@@ -678,34 +678,6 @@
             color: var(--accent);
             font-weight: 700;
         }
-
-        /* Keyboard Shortcuts */
-        .shortcuts-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .shortcut {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.8125rem;
-            color: var(--text-secondary);
-        }
-
-        .key {
-            background: var(--bg-tertiary);
-            padding: 6px 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            min-width: 48px;
-            text-align: center;
-            font-weight: 500;
-        }
-
         /* Statistics Grid */
         .stats-grid {
             display: grid;
@@ -5120,8 +5092,6 @@
 
         // Initialize
         loadCards();
-
-        // =============================================
         // GLOSSAR FUNKTIONEN
         // =============================================
 
@@ -5299,6 +5269,21 @@
 
         // Initialisiere Glossar beim Laden
         initGlossar();
+
+        // control-btn hover effect
+
+        document.querySelectorAll('.control-btn').forEach(btn => {
+          btn.addEventListener('mouseenter', function() {
+            document.querySelectorAll('.control-btn').forEach(b => {
+              b.style.opacity = (b === btn) ? '1' : '0.5';
+          });
+        });
+          btn.addEventListener('mouseleave', function() {
+            document.querySelectorAll('.control-btn').forEach(b => {
+              b.style.opacity = '1';
+            });
+          });
+        });
     </script>
 </body>
 </html>
