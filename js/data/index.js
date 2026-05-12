@@ -1,0 +1,14 @@
+// AP1 Lernkarten – Alle Kategorien zusammengeführt
+// Wird nach den einzelnen Kategorie-Dateien geladen.
+const EMBEDDED_CARDS = [
+    ...CARDS_IT_SICHERHEIT,
+    ...CARDS_NETZWERKTECHNIK,
+    ...CARDS_PROJEKTMANAGEMENT,
+    ...CARDS_ALLGEMEIN,
+    ...CARDS_BWL_GRUNDLAGEN,
+    ...CARDS_HARDWARE,
+    ...CARDS_CLOUD_VIRTUALISIERUNG,
+    ...CARDS_DATENBANKEN,
+    ...CARDS_QUALITAETSMANAGEMENT,
+    ...CARDS_SOFTWAREENTWICKLUNG
+];
