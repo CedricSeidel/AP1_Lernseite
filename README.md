@@ -2,6 +2,8 @@
 
 **Interaktive Lernkarten-App zur Vorbereitung auf die IHK AP1-Prüfung für Fachinformatiker.**
 
+🔗 **[https://cedricseidel.github.io/AP1_Lernseite/](https://cedricseidel.github.io/AP1_Lernseite/)**
+
 Einfach `index.html` im Browser öffnen – kein Server, keine Installation.
 
 ---
